@@ -14,7 +14,4 @@
     <string name="forget_password">Forget password?</string>
     <string name="sign_up_here">New to this? Sign up here</string>
     <string name="save">Save</string>
-    <string name="favorite">Favorite</string>
-    <string name="home">Home</string>
-    <string name="profile">Profile</string>
 </resources>
