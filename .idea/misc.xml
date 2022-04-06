@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2135" />
+        <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.133" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_main.xml" value="0.3582427536231884" />
       </map>
     </option>
