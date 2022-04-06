@@ -3,7 +3,6 @@ package me.chunfai.assignment
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -35,26 +34,9 @@ class Login : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
-                val uid = FirebaseAuth.getInstance().currentUser?.uid
-                val user = User()
-
-                if (uid != null) {
-                    database.collection("users").document(uid).get()
-                        .addOnSuccessListener { doc ->
-                            user.firstName = doc.get("firstName").toString()
-                            user.lastName = doc.get("lastName").toString()
-                        }
-                        .addOnFailureListener { doc ->
-                            Log.e("Firestore", "Error in loading file: $doc")
-                        }
-                }
-
                 Toast.makeText(this, "Logged in successfully.", Toast.LENGTH_SHORT).show()
-
                 val intent = Intent(this, UserProfile::class.java)
-                intent.putExtra("user", user)
                 startActivity(intent)
-
                 finish()
             } else {
                 Toast.makeText(this, "Incorrect login credentials.", Toast.LENGTH_SHORT).show()
