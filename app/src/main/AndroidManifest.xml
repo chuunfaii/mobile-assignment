@@ -13,6 +13,9 @@
             android:name=".AddReview"
             android:exported="false" />
         <activity
+            android:name=".Restaurant_detail"
+            android:exported="false" />
+        <activity
             android:name=".Favourites"
             android:exported="false" />
         <activity
