@@ -12,4 +12,5 @@
     <string name="welcome_to_foodie">Welcome to Foodie! 😊</string>
     <string name="login">login</string>
     <string name="does_not_have_account">Does Not Have An Account? Register Here</string>
+    <string name="save">Save</string>
 </resources>
