@@ -67,26 +67,26 @@
 
             <EditText
                 android:id="@+id/res_time"
-                android:layout_width="180dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:ems="10"
                 android:background="@color/white"
                 android:padding="10dp"
-                android:hint="Business Hour From"
+                android:hint="From"
                 android:inputType="time"
                 android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/res_time2"
-                android:layout_width="180dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:layout_alignParentRight="true"
                 android:ems="10"
                 android:background="@color/white"
                 android:padding="10dp"
-                android:hint="Business Hour To"
+                android:hint="To"
                 android:inputType="time"
                 android:minHeight="48dp" />
 
