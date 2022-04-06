@@ -37,4 +37,11 @@
         android:layout_height="wrap_content"
         android:text="Favourites" />
 
+    <Button
+        android:id="@+id/homeButtonRestaurantDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restaurant Detail" />
+
+
 </LinearLayout>
