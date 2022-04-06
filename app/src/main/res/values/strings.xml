@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Assignment</string>
-    <string name="first_name">first_name</string>
-    <string name="last_name">last_name</string>
-    <string name="email">email</string>
-    <string name="password">password</string>
-    <string name="confirm_password">confirm_password</string>
-    <string name="save">save</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_confirmation">Confirm password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="logo_description">Foodie Logo</string>
+    <string name="already_have_an_account_sign_in_here">Already have an account? Sign in here</string>
+    <string name="foodie">Foodie</string>
+    <string name="welcome_to_foodie">Welcome to Foodie! 😊</string>
 </resources>

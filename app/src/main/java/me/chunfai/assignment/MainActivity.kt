@@ -13,11 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button_click = findViewById<Button>(R.id.button)
-        button_click.setOnClickListener{
-            val intent = Intent(this,Register::class.java)
+        val homeButtonRegister = findViewById<Button>(R.id.homeButtonRegister)
+
+        homeButtonRegister.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
-
     }
+
 }

@@ -1,12 +1,11 @@
 package me.chunfai.assignment
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 
-class Register :AppCompatActivity() {
+class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register)
-
+        setContentView(R.layout.activity_register)
     }
 }
