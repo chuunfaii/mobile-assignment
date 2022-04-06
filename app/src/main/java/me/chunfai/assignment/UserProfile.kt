@@ -1,7 +1,9 @@
 package me.chunfai.assignment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,6 +18,7 @@ class UserProfile : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -23,11 +26,22 @@ class UserProfile : AppCompatActivity() {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        val user = intent.getSerializableExtra("user") as? User
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (user != null) {
-            binding.editFirstName.setText(user.firstName)
-            binding.editLastName.setText(user.firstName)
+        if (uid != null) {
+            database.collection("users").document(uid).get()
+                .addOnSuccessListener {
+                    binding.editFirstName.setText(it.get("firstName").toString())
+                    binding.editLastName.setText(it.get("lastName").toString())
+                    binding.editEmail.setText(it.get("email").toString())
+                }
+                .addOnFailureListener {
+                    Log.e("Firestore", "Error in loading file: $it")
+                }
+        } else {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
