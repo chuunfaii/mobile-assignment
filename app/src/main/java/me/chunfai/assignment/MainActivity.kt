@@ -14,15 +14,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val homeButtonRegister = findViewById<Button>(R.id.homeButtonRegister)
-        val buttonLogin = findViewById<Button>(R.id.ButtonLogin)
+        val homeButtonLogin = findViewById<Button>(R.id.homeButtonLogin)
+        val homeButtonUserProfile = findViewById<Button>(R.id.homeButtonUserProfile)
+        val homeButtonAddRestaurant = findViewById<Button>(R.id.homeButtonAddRestaurant)
 
         homeButtonRegister.setOnClickListener {
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
 
-        buttonLogin.setOnClickListener {
+        homeButtonLogin.setOnClickListener {
             val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+
+        homeButtonUserProfile.setOnClickListener {
+            val intent = Intent(this, UserProfile::class.java)
+            startActivity(intent)
+        }
+
+        homeButtonAddRestaurant.setOnClickListener {
+            val intent = Intent(this, AddRestaurant::class.java)
             startActivity(intent)
         }
     }

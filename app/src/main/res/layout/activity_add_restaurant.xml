@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -70,12 +70,12 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:ems="10"
                 android:background="@color/white"
-                android:padding="10dp"
+                android:ems="10"
                 android:hint="From"
                 android:inputType="time"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="10dp" />
 
             <EditText
                 android:id="@+id/res_time2"
@@ -138,4 +138,4 @@
         </RelativeLayout>
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

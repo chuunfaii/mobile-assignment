@@ -25,4 +25,10 @@
         android:layout_height="wrap_content"
         android:text="User Profile" />
 
+    <Button
+        android:id="@+id/homeButtonAddRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Restaurant" />
+
 </LinearLayout>
