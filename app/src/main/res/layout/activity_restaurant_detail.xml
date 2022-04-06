@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Restaurant_detail"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/restaurant"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/logo_description"
+        android:layout_marginStart="35dp"
+        android:src="@drawable/foodimg3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strawberry"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:progressBackgroundTint="#FBBC00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/business_hour"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/review"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="30dp"/>
+
+        <ImageView
+            android:id="@+id/review"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="25dp"
+            android:contentDescription="@string/logo_description"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_comment_blog" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar1"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:progressBackgroundTint="#FBBC00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="30dp"/>
+
+
+
+</LinearLayout>
