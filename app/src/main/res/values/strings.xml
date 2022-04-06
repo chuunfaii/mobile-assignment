@@ -10,7 +10,8 @@
     <string name="already_have_an_account_sign_in_here">Already have an account? Sign in here</string>
     <string name="foodie">Foodie</string>
     <string name="welcome_to_foodie">Welcome to Foodie! 😊</string>
-    <string name="login">login</string>
+    <string name="login">Login</string>
     <string name="forget_password">Forget password?</string>
     <string name="sign_up_here">New to this? Sign up here</string>
+    <string name="save">Save</string>
 </resources>
