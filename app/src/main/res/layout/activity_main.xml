@@ -31,4 +31,10 @@
         android:layout_height="wrap_content"
         android:text="Add Restaurant" />
 
+    <Button
+        android:id="@+id/homeButtonFavourites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Favourites" />
+
 </LinearLayout>
