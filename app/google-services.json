@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "167574597348",
+    "project_id": "mobile-assignment-3d2dd",
+    "storage_bucket": "mobile-assignment-3d2dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167574597348:android:4daa61918d7486b2f8c6f1",
+        "android_client_info": {
+          "package_name": "me.chunfai.assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167574597348-p14i6hsuaj9jk447obgkjltacafl3u0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDz-0aDDrNs_BAEmFv4uZmjtKpdFUMjQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167574597348-p14i6hsuaj9jk447obgkjltacafl3u0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
