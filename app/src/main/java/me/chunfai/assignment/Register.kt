@@ -47,7 +47,7 @@ class Register : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 val uid: String? = FirebaseAuth.getInstance().currentUser?.uid
-                writeNewUser(uid, firstName, lastName)
+                writeNewUser(uid, firstName, lastName, email)
                 Toast.makeText(this, "Account has been registered successfully.", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
@@ -56,8 +56,8 @@ class Register : AppCompatActivity() {
         }
     }
 
-    private fun writeNewUser(uid: String?, firstName: String, lastName: String) {
-        val user = User(firstName, lastName)
+    private fun writeNewUser(uid: String?, firstName: String, lastName: String, email: String) {
+        val user = User(firstName, lastName, email)
 
         if (uid != null) {
             database.collection("users").document(uid).set(user)
