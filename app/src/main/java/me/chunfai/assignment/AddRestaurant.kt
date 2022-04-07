@@ -1,7 +1,5 @@
 package me.chunfai.assignment
 
-import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
-
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,20 +13,28 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+
+import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
 
 import java.io.File
 import java.io.FileNotFoundException
-import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AddRestaurant : AppCompatActivity() {
 
@@ -43,6 +49,8 @@ class AddRestaurant : AppCompatActivity() {
 
     val REQUEST_IMAGE_CAPTURE = 1
     lateinit var currentPhotoPath: String
+
+    var storageReference: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,20 +88,6 @@ class AddRestaurant : AppCompatActivity() {
         }
     }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
-        }
-    }
 
     private fun imageChooser(){
         val intent = Intent(Intent.ACTION_PICK)
@@ -141,23 +135,32 @@ class AddRestaurant : AppCompatActivity() {
 
 
     private fun store(){
+
         val name = binding.resName.text.toString()
         val address = binding.resAddress.text.toString()
         val contact = binding.resPhone.text.toString()
         val open = binding.resTimeOpen.text.toString()
         val close = binding.resTimeClose.text.toString()
         val desc = binding.resDescription.text.toString()
-        val image = binding.imageView
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val filename = File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
 
         if (name.isBlank() || address.isBlank() || contact.isBlank() || open.isBlank() || close.isBlank() || desc.isBlank()) {
             Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
             return
+        }else{
+            val restaurant = Restaurant(name, address, open, close, contact, desc)
+            database.collection("restaurants").document().set(restaurant)
+            /*storageReference = FirebaseStorage.getInstance().getReference("images/${filename}")
+            storageReference!!.putFile(imageUri!!)*/
+            Toast.makeText(this, "Restaurant Added Successfully", Toast.LENGTH_LONG).show()
         }
-
-
-        val restaurant = Restaurant(name, address, open, close, contact, desc)
-
-        database.collection("restaurants").document().set(restaurant)
 
     }
 }

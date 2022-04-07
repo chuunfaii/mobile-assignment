@@ -99,7 +99,7 @@
 
                 <EditText
                     android:id="@+id/res_timeOpen"
-                    android:layout_width="170dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:background="@color/white"
@@ -111,7 +111,7 @@
 
                 <EditText
                     android:id="@+id/res_timeClose"
-                    android:layout_width="170dp"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:layout_alignParentRight="true"
