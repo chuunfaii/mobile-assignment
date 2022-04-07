@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,16 +7,36 @@
     tools:context=".Restaurant_detail"
     android:orientation="vertical"
     >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/restaurant"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="40dp"
-        android:contentDescription="@string/logo_description"
-        android:layout_marginStart="35dp"
-        android:src="@drawable/foodimg3" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/restaurant"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="start"
+            android:contentDescription="@string/logo_description"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/foodimg3" />
+
+        <ImageView
+            android:id="@+id/ic_favorite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,6 +108,10 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,6 +120,18 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="30dp"/>
+
+    <ImageView
+        android:id="@+id/option_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:layout_alignParentEnd="true"
+         />
+    </RelativeLayout>
 
     <RatingBar
         android:id="@+id/ratingBar1"
@@ -116,6 +152,6 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="30dp"/>
 
+    </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>
