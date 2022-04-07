@@ -1,5 +1,6 @@
 package me.chunfai.assignment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,13 +29,19 @@ class UserProfile : AppCompatActivity() {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        user = intent.getSerializableExtra("user") as User
+        if (intent.hasExtra("user")) {
+            user = intent.getSerializableExtra("user") as User
 
-        binding.editFirstName.setText(user.firstName)
-        binding.editLastName.setText(user.lastName)
-        binding.editEmail.setText(user.email)
+            binding.editFirstName.setText(user.firstName)
+            binding.editLastName.setText(user.lastName)
+            binding.editEmail.setText(user.email)
 
-        binding.btnSave.setOnClickListener { updateProfile() }
+            binding.btnSave.setOnClickListener { updateProfile() }
+        } else {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun updateProfile() {
