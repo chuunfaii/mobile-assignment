@@ -1,5 +1,7 @@
 package me.chunfai.assignment
 
+import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
+
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,11 +17,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase
-import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
+
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
