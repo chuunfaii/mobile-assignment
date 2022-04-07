@@ -16,15 +16,15 @@
         android:paddingEnd="16dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/title1"
             android:textSize="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Restaurant"
             android:textAlignment="center" />
 
-        <ImageButton
-            android:id="@+id/res_image"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -32,7 +32,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_gravity="center_vertical|center_horizontal"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/ic_add_" />
+
+        <Button
+            android:id="@+id/btnSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Select Image"
+            android:layout_gravity="center_vertical|center_horizontal" />
 
         <EditText
             android:id="@+id/res_name"
@@ -66,7 +77,7 @@
             android:layout_height="wrap_content" >
 
             <EditText
-                android:id="@+id/res_time"
+                android:id="@+id/res_timeOpen"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -78,7 +89,7 @@
                 android:padding="10dp" />
 
             <EditText
-                android:id="@+id/res_time2"
+                android:id="@+id/res_timeClose"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
