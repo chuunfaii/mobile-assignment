@@ -1,10 +1,13 @@
 package me.chunfai.assignment
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
@@ -17,8 +20,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
+import java.io.File
 import java.io.FileNotFoundException
+import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddRestaurant : AppCompatActivity() {
@@ -32,6 +38,9 @@ class AddRestaurant : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
 
+    val REQUEST_IMAGE_CAPTURE = 1
+    lateinit var currentPhotoPath: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddRestaurantBinding.inflate(layoutInflater)
@@ -44,6 +53,42 @@ class AddRestaurant : AppCompatActivity() {
 
         binding.btnSelect.setOnClickListener{
             imageChooser()
+        }
+
+        binding.btnCamera.setOnClickListener{
+            openCam()
+        }
+    }
+
+    private fun openCam(){
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "Open Camera Failed", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            binding.imageView.setImageBitmap(imageBitmap)
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
         }
     }
 
@@ -90,6 +135,8 @@ class AddRestaurant : AppCompatActivity() {
         }
     }
 
+
+
     private fun store(){
         val name = binding.resName.text.toString()
         val address = binding.resAddress.text.toString()
@@ -97,11 +144,13 @@ class AddRestaurant : AppCompatActivity() {
         val open = binding.resTimeOpen.text.toString()
         val close = binding.resTimeClose.text.toString()
         val desc = binding.resDescription.text.toString()
+        val image = binding.imageView
 
         if (name.isBlank() || address.isBlank() || contact.isBlank() || open.isBlank() || close.isBlank() || desc.isBlank()) {
             Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
             return
         }
+
 
         val restaurant = Restaurant(name, address, open, close, contact, desc)
 
