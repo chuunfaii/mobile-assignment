@@ -2,6 +2,7 @@ package me.chunfai.assignment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -11,15 +12,40 @@ class Restaurant_detail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant_detail)
 
-
-//        menu()
+        val menuBtn = findViewById<ImageView>(R.id.option_menu)
+        menuBtn.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(this, menuBtn)
+            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_edit ->
+                        Toast.makeText(
+                            this@Restaurant_detail,
+                            "You Clicked : " + item.title,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    R.id.action_delete ->
+                        Toast.makeText(
+                            this@Restaurant_detail,
+                            "You Clicked : " + item.title,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                }
+                true
+            })
+            popupMenu.show()
+        }
     }
+}
 
 //    private fun menu(){
-//        val menu = findViewById<ImageView>(R.id.option_menu)
-//        val popUpMenu =  PopupMenu(applicationContext,menu)
-//        popUpMenu.inflate(R.menu.menu)
-//        popUpMenu.setOnMenuItemClickListener {
+////        val popupMenu: PopupMenu = PopupMenu(this,button)
+////        popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
+//
+//        val testMenu = findViewById<ImageView>(R.id.option_menu)
+//        val popUpMenu =  PopupMenu(this, testMenu)
+//        popUpMenu.menuInflater.inflate(R.menu.menu, popUpMenu.menu)
+//        popUpMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
 //            when(it.itemId){
 //                R.id.action_edit->{
 //                    Toast.makeText(applicationContext,"Edit Pressed",Toast.LENGTH_SHORT).show()
@@ -31,7 +57,9 @@ class Restaurant_detail : AppCompatActivity() {
 //                }
 //                else ->true
 //            }
-//        }
+//            true
+//        })
+//        popUpMenu.show()
 
 //        menu.setOnLongClickListener{
 //            try{
@@ -49,5 +77,5 @@ class Restaurant_detail : AppCompatActivity() {
 //            }
 //            true
 //        }
-    }
-}
+//    }
+//}
