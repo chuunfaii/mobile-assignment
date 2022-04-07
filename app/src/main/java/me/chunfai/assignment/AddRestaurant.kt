@@ -45,12 +45,12 @@ class AddRestaurant : AppCompatActivity() {
     lateinit var imageView: ImageView
     lateinit var button: Button
     private val pickImage = 100
-    private var imageUri: Uri? = null
+    private lateinit var imageUri: Uri
 
     val REQUEST_IMAGE_CAPTURE = 1
     lateinit var currentPhotoPath: String
 
-    var storageReference: StorageReference? = null
+//    var storageReference: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +120,7 @@ class AddRestaurant : AppCompatActivity() {
             val data = it.data
             val selectedImage = Objects.requireNonNull(data)?.data
             var imageStream: InputStream? = null
+            imageUri = data?.data!!
 
             try {
                 imageStream = contentResolver.openInputStream(selectedImage!!)!!
@@ -143,13 +144,17 @@ class AddRestaurant : AppCompatActivity() {
         val close = binding.resTimeClose.text.toString()
         val desc = binding.resDescription.text.toString()
 
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val filename = File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        )
+//        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//        val filename = File.createTempFile(
+//            "JPEG_${timeStamp}_", /* prefix */
+//            ".jpg", /* suffix */
+//            storageDir /* directory */
+//        )
+
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val now = Date()
+        val filename = formatter.format(now)
 
         if (name.isBlank() || address.isBlank() || contact.isBlank() || open.isBlank() || close.isBlank() || desc.isBlank()) {
             Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
@@ -157,6 +162,11 @@ class AddRestaurant : AppCompatActivity() {
         }else{
             val restaurant = Restaurant(name, address, open, close, contact, desc)
             database.collection("restaurants").document().set(restaurant)
+
+            val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
+            storageReference.putFile(imageUri).addOnSuccessListener {
+                Toast.makeText(this, "done upload image", Toast.LENGTH_LONG).show()
+            }
             /*storageReference = FirebaseStorage.getInstance().getReference("images/${filename}")
             storageReference!!.putFile(imageUri!!)*/
             Toast.makeText(this, "Restaurant Added Successfully", Toast.LENGTH_LONG).show()
