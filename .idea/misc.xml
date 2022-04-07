@@ -6,7 +6,7 @@
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/field.xml" value="0.215" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/file_upload_image_border.xml" value="0.215" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/file_upload_round_button.xml" value="0.215" />
-        <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.264" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_add_review.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_favourites.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/layout/activity_homepage.xml" value="0.25416666666666665" />
@@ -18,7 +18,6 @@
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_main.xml" value="0.3582427536231884" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_search.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/add_restaurant.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/register2.xml" value="0.36666666666666664" />
