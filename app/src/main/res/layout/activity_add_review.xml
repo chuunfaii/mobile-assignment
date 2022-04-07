@@ -33,7 +33,7 @@
         android:layout_marginRight="50dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="@string/enter_your_review"
+        android:hint="@string/enter_you_review"
         android:inputType="textMultiLine"
         android:padding="5dp"
         android:importantForAutofill="no" />

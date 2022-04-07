@@ -22,7 +22,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="strawberry">Strawberry Farm</string>
-    <string name="address">H-2-9 Tanjung Bungah, Jalan Besi, 11600 Pulau Pinang</string>
+    <string name="address">H&#8211;2&#8211;9 Tanjung Bungah, Jalan Besi, 11600 Pulau Pinang</string>
     <string name="contact">Contact Number : 0123456789</string>
     <string name="business_hour">Business Hour : 10.00am - 10.00pm</string>
     <string name="review"><b>Reviews</b></string>
@@ -31,4 +31,5 @@
     <string name="edit_review">Edit</string>
     <string name="delete_review">Delete</string>
     <string name="review_menu" />
+    <string name="enter_you_review">Enter you review</string>
 </resources>
