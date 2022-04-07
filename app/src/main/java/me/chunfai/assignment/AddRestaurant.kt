@@ -44,7 +44,7 @@ class AddRestaurant : AppCompatActivity() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), pickImage)
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), pickImage)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
