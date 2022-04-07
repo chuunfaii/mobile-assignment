@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -23,22 +22,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:progressBackgroundTint="#FBBC00" />
+        android:progressTint="#FBBC00"
+        android:progressBackgroundTint="#FFFFFF" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/editReview"
         android:layout_width="match_parent"
         android:layout_height="117dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Enter your review"
+        android:hint="@string/enter_you_review"
         android:inputType="textMultiLine"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:importantForAutofill="no" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
