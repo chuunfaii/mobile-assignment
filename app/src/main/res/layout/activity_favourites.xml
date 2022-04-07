@@ -1,70 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:background="@color/main_color"
-    android:gravity="top"
-    android:orientation="vertical"
     tools:context=".Favourites">
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/imageButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:srcCompat="@drawable/ic_favorite"-->
-<!--        style="@style/ToggleButtonWithIconOnly"-->
-<!--        />-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-<!--    <com.google.android.material.button.MaterialButtonToggleGroup-->
-<!--        android:id="@+id/toggleButtonGroup1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
 
-<!--        <Button-->
-<!--            android:id="@+id/ic_favorite1"-->
-<!--            style="@style/ToggleButtonWithIconOnly"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            app:icon="@drawable/ic_favorite" />-->
+            <ImageView
+                android:id="@+id/cake_image"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/fgh" />
 
-<!--    </com.google.android.material.button.MaterialButtonToggleGroup>-->
+            <ImageView
+                android:id="@+id/ic_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_baseline_favorite_24" />
 
-    <ImageView
-        android:id="@+id/cake"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="55dp"
-        app:srcCompat="@drawable/fgh"
-        />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:background="@drawable/ic_favorite" />
-
-    <ImageView
-        android:id="@+id/cake2"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/cake"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/fgh" />
-
-    <ImageView
-        android:id="@+id/cake3"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/cake2"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/fgh" />
+        </RelativeLayout>
 
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/cake_image2"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/fgh" />
+
+            <ImageView
+                android:id="@+id/ic_favorite2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/cake_image3"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/fgh" />
+
+            <ImageView
+                android:id="@+id/ic_favorite3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/cake_image4"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/fgh" />
+
+            <ImageView
+                android:id="@+id/ic_favorite4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>
