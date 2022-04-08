@@ -20,6 +20,7 @@
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_main.xml" value="0.3582427536231884" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_search.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_test_all_restaurants.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.36666666666666664" />
@@ -29,32 +30,6 @@
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/register2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/test_restaurant_button.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.3875" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_homepage.xml" value="0.25" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_homepage_cardview.xml" value="0.3875" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_search.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/rv_item.xml" value="0.20208333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/drawable/ic_comment_blog.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/drawable/ic_comment_blog_background.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/drawable/ic_favorite.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/drawable/ic_favorite_full.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/drawable/transparent_btn_outline.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_add_review.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_favourites.xml" value="0.4" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_homepage.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.264" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_testing.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/register.xml" value="0.264" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/mipmap-anydpi-v26/ic_comment_blog.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/mipmap-anydpi-v26/ic_comment_blog_round.xml" value="0.248" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/mobile-assignment/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.248" />
       </map>
     </option>
   </component>

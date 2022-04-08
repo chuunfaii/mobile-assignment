@@ -1,5 +1,6 @@
 package me.chunfai.assignment
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -82,6 +83,12 @@ class Restaurant_detail : AppCompatActivity() {
         }
 
         binding.icFavorite.setOnClickListener { store() }
+
+        binding.review.setOnClickListener {
+            val intent = Intent(this, AddReview::class.java)
+            intent.putExtra("restaurantId", restaurant.id)
+            startActivity(intent)
+        }
     }
 
     private fun store(){

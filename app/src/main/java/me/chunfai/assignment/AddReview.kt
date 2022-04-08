@@ -32,8 +32,7 @@ class AddReview : AppCompatActivity() {
             return
         }
 
-        // Temporary variables.
-        val restaurantId = "restaurantId"
+        val restaurantId = intent.getStringExtra("restaurantId").toString()
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
         val reviewId = restaurantId + "_" + uid
