@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import me.chunfai.assignment.databinding.ActivityAddReviewBinding
@@ -84,9 +85,18 @@ class Restaurant_detail : AppCompatActivity() {
     }
 
     private fun store(){
-        Toast.makeText(this, "Image View Clicked", Toast.LENGTH_LONG).show()
+        val uid = auth.currentUser!!.uid
+        val restaurant = intent.getSerializableExtra("restaurant") as Restaurant
+
+        val resId = restaurant.id
+        val favHaspMap = hashMapOf(
+            "$uid" to true,
+        )
+        if (resId != null) {
+            database.collection("favorites").document(resId).set(favHaspMap, SetOptions.merge())
+        }
+        Toast.makeText(this, "Added to Favorite", Toast.LENGTH_LONG).show()
     }
 
 
 }
-
