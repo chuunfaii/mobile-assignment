@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val homeButtonAddReview = findViewById<Button>(R.id.homeButtonAddReview)
         val homeButtonHomepage = findViewById<Button>(R.id.homeButtonHomepage)
         val homeButtonSearch = findViewById<Button>(R.id.homeButtonSearch)
+        val homeButtonTestAllRestaurants = findViewById<Button>(R.id.homeButtonTestAllRestaurants)
 
         homeButtonRegister.setOnClickListener {
             val intent = Intent(this, Register::class.java)
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
 
         homeButtonSearch.setOnClickListener {
             val intent = Intent(this, Search::class.java)
+            startActivity(intent)
+        }
+
+        homeButtonTestAllRestaurants.setOnClickListener {
+            val intent = Intent(this, TestAllRestaurants::class.java)
             startActivity(intent)
         }
     }

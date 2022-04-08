@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:src="@drawable/ic_add_" />
+                android:src="@drawable/ic_image" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

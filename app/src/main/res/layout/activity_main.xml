@@ -61,4 +61,10 @@
         android:layout_height="wrap_content"
         android:text="Search" />
 
+    <Button
+        android:id="@+id/homeButtonTestAllRestaurants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Restaurants" />
+
 </LinearLayout>

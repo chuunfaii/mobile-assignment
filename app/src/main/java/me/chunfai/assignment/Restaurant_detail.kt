@@ -6,11 +6,21 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import me.chunfai.assignment.databinding.ActivityRestaurantDetailBinding
 
 class Restaurant_detail : AppCompatActivity() {
+
+    private lateinit var binding: ActivityRestaurantDetailBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_restaurant_detail)
+
+        binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val menuBtn = findViewById<ImageView>(R.id.option_menu)
         menuBtn.setOnClickListener {
@@ -35,6 +45,12 @@ class Restaurant_detail : AppCompatActivity() {
             })
             popupMenu.show()
         }
+
+        binding.icFavorite.setOnClickListener { store() }
+    }
+
+    private fun store(){
+        Toast.makeText(this, "Image View Clicked", Toast.LENGTH_LONG).show()
     }
 }
 
