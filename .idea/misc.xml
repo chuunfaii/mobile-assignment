@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.22780797101449277" />
+        <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_add_review.xml" value="0.22780797101449277" />
+        <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_favourites.xml" value="0.22780797101449277" />
         <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_homepage.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_login.xml" value="0.22780797101449277" />
         <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.22780797101449277" />
         <entry key="..\:/AndroidStudio/Assignment/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/field.xml" value="0.215" />
