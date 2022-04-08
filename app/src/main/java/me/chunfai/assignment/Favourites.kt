@@ -2,9 +2,13 @@ package me.chunfai.assignment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -101,6 +105,19 @@ class Favourites : AppCompatActivity(), CoroutineScope {
                 favRestaurantIds.add(document.id)
             }
         }
+    }
+
+    suspend fun removeFromFavourites(restaurant: Restaurant) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val restaurantId = restaurant.id.toString()
+
+        val favouritesRef = database.collection("favorites").document(restaurantId)
+        val updates = hashMapOf<String, Any>(
+            uid to FieldValue.delete()
+        )
+        favouritesRef.update(updates).await()
+
+        Toast.makeText(this, "${restaurant.name} has been removed from your favorites.", Toast.LENGTH_SHORT).show()
     }
 
 }
