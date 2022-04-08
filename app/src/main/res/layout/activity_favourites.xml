@@ -8,98 +8,249 @@
     tools:context=".Favourites">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/restaurantCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_margin="20dp"
+            card_view:cardElevation="10dp">
 
-            <ImageView
-                android:id="@+id/cake_image"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/fgh" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <ImageView
-                android:id="@+id/ic_favorite"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+                <ImageView
+                    android:id="@+id/restaurantImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/fgh"
+                    tools:ignore="ContentDescription" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/favoriteIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_baseline_favorite_24"
+                    tools:ignore="ContentDescription" />
 
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/placeHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/restaurantNameHolder"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurantName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Restaurant Name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/restaurantCard2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_margin="20dp"
+            card_view:cardElevation="10dp">
 
-            <ImageView
-                android:id="@+id/cake_image2"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/fgh" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <ImageView
-                android:id="@+id/ic_favorite2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+                <ImageView
+                    android:id="@+id/restaurantImage2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/fgh"
+                    tools:ignore="ContentDescription" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/favoriteIcon2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_baseline_favorite_24"
+                    tools:ignore="ContentDescription" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/placeHolder2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/restaurantNameHolder2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurantName2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Restaurant Name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/restaurantCard3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_margin="20dp"
+            card_view:cardElevation="10dp">
 
-            <ImageView
-                android:id="@+id/cake_image3"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/fgh" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <ImageView
-                android:id="@+id/ic_favorite3"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+                <ImageView
+                    android:id="@+id/restaurantImage3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/fgh"
+                    tools:ignore="ContentDescription" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/favoriteIcon3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_baseline_favorite_24"
+                    tools:ignore="ContentDescription" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/placeHolder3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/restaurantNameHolder3"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurantName3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Restaurant Name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/restaurantCard4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_margin="20dp"
+            card_view:cardElevation="10dp">
 
-            <ImageView
-                android:id="@+id/cake_image4"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/fgh" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-            <ImageView
-                android:id="@+id/ic_favorite4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_baseline_favorite_24" />
+                <ImageView
+                    android:id="@+id/restaurantImage4"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/fgh"
+                    tools:ignore="ContentDescription" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/favoriteIcon4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_baseline_favorite_24"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/placeHolder4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/restaurantNameHolder4"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/restaurantName4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Restaurant Name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
