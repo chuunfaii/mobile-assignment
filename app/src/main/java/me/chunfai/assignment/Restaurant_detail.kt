@@ -3,6 +3,7 @@ package me.chunfai.assignment
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -15,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import me.chunfai.assignment.databinding.ActivityAddReviewBinding
 import me.chunfai.assignment.databinding.ActivityRestaurantDetailBinding
 import java.io.File
+
 
 
 class Restaurant_detail : AppCompatActivity() {
@@ -37,13 +39,14 @@ class Restaurant_detail : AppCompatActivity() {
         val closeTime = restaurant.closeTime
 
         val imageName = restaurant.imageName
-        val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName.jpg")
+        val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
         val localfile = File.createTempFile("TempImage","jpg")
         imageRef.getFile(localfile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
             binding.restaurantImage.setImageBitmap(bitmap)
         }.addOnFailureListener{
             Toast.makeText(this,"Failed to retrieve the image",Toast.LENGTH_SHORT).show()
+
         }
 
         binding.restaurantTitle.text = restaurant.name
