@@ -30,9 +30,14 @@
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_add_restaurant.xml" value="0.3875" />
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_homepage.xml" value="0.25" />
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_homepage_cardview.xml" value="0.3875" />
+        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.1" />
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_search.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_test_all_restaurants.xml" value="0.1" />
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/rv_item.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/chiam/AndroidStudioProjects/mobile-assignment/app/src/main/res/layout/test_restaurant_button.xml" value="0.1" />
       </map>
     </option>
   </component>
