@@ -7,5 +7,6 @@ data class Restaurant(
     var closeTime: String? = null,
     var contact: String? = null,
     var description: String? = null,
+    var imageName: String?= null,
 )
 

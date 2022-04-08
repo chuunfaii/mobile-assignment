@@ -1,13 +1,11 @@
 package me.chunfai.assignment
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
@@ -16,20 +14,15 @@ import android.widget.Toast
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 
 import me.chunfai.assignment.databinding.ActivityAddRestaurantBinding
 
-import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -49,8 +42,6 @@ class AddRestaurant : AppCompatActivity() {
 
     val REQUEST_IMAGE_CAPTURE = 1
     lateinit var currentPhotoPath: String
-
-//    var storageReference: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,30 +84,10 @@ class AddRestaurant : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.setType("image/*")
         someActivityResultLauncher.launch(intent)
-
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-//        startActivityForResult(Intent.createChooser(intent, "Select Image"), pickImage)
-
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-
-//        Log.d("imageChooser()", "Done initializing intent.")
-
-//        Log.d("imageChooser()", "Before launching getResult.")
-
-//        getResult.launch(intent)
-
-//        Log.d("imageChooser()", "After launching getResult.")
-//        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-//        registerForActivityResult(gallery, pickImage)
-
     }
 
     private val someActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
+        if (it.resultCode == RESULT_OK) {
             val data = it.data
             val selectedImage = Objects.requireNonNull(data)?.data
             var imageStream: InputStream? = null
@@ -144,14 +115,6 @@ class AddRestaurant : AppCompatActivity() {
         val close = binding.resTimeClose.text.toString()
         val desc = binding.resDescription.text.toString()
 
-//        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//        val filename = File.createTempFile(
-//            "JPEG_${timeStamp}_", /* prefix */
-//            ".jpg", /* suffix */
-//            storageDir /* directory */
-//        )
-
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val now = Date()
         val filename = formatter.format(now)
@@ -160,15 +123,13 @@ class AddRestaurant : AppCompatActivity() {
             Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
             return
         }else{
-            val restaurant = Restaurant(name, address, open, close, contact, desc)
+            val restaurant = Restaurant(name, address, open, close, contact, desc, filename)
             database.collection("restaurants").document().set(restaurant)
 
             val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
             storageReference.putFile(imageUri).addOnSuccessListener {
                 Toast.makeText(this, "done upload image", Toast.LENGTH_LONG).show()
             }
-            /*storageReference = FirebaseStorage.getInstance().getReference("images/${filename}")
-            storageReference!!.putFile(imageUri!!)*/
             Toast.makeText(this, "Restaurant Added Successfully", Toast.LENGTH_LONG).show()
         }
 
