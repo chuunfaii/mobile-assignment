@@ -1,14 +1,23 @@
 package me.chunfai.assignment
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import me.chunfai.assignment.databinding.ActivityAddReviewBinding
 import me.chunfai.assignment.databinding.ActivityRestaurantDetailBinding
+import java.io.File
+
+
 
 class Restaurant_detail : AppCompatActivity() {
 
@@ -18,9 +27,34 @@ class Restaurant_detail : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = Firebase.auth
+        database = FirebaseFirestore.getInstance()
+
+        val restaurant = intent.getSerializableExtra("restaurant") as Restaurant
+
+        val openTime = restaurant.openTime
+        val closeTime = restaurant.closeTime
+
+        val imageName = restaurant.imageName
+        val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
+        val localfile = File.createTempFile("TempImage","jpg")
+        imageRef.getFile(localfile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
+            binding.restaurantImage.setImageBitmap(bitmap)
+        }.addOnFailureListener{
+            Toast.makeText(this,"Failed to retrieve the image",Toast.LENGTH_SHORT).show()
+
+        }
+
+        binding.restaurantTitle.text = restaurant.name
+        binding.restaurantAddress.text = restaurant.address
+        binding.restaurantContact.text = "Contact Number : " + restaurant.contact
+        binding.restaurantBusinessHour.text = "Business Hour : $openTime - $closeTime"
+
+
 
         val menuBtn = findViewById<ImageView>(R.id.option_menu)
         menuBtn.setOnClickListener {
@@ -52,46 +86,7 @@ class Restaurant_detail : AppCompatActivity() {
     private fun store(){
         Toast.makeText(this, "Image View Clicked", Toast.LENGTH_LONG).show()
     }
+
+
 }
 
-//    private fun menu(){
-////        val popupMenu: PopupMenu = PopupMenu(this,button)
-////        popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
-//
-//        val testMenu = findViewById<ImageView>(R.id.option_menu)
-//        val popUpMenu =  PopupMenu(this, testMenu)
-//        popUpMenu.menuInflater.inflate(R.menu.menu, popUpMenu.menu)
-//        popUpMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
-//            when(it.itemId){
-//                R.id.action_edit->{
-//                    Toast.makeText(applicationContext,"Edit Pressed",Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//                R.id.action_delete->{
-//                    Toast.makeText(applicationContext,"Delete Pressed",Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//                else ->true
-//            }
-//            true
-//        })
-//        popUpMenu.show()
-
-//        menu.setOnLongClickListener{
-//            try{
-//                val popup = PopupMenu::class.java.getDeclaredField("mPopup")
-//                popup.isAccessible = true
-//                val menus = popup.get(popUpMenu)
-//                menus.javaClass
-//                    .getDeclaredMethod("setForcedShowIcon",Boolean::class.java)
-//                    .invoke(menus,true)
-//
-//            }catch(e:Exception){
-//                e.printStackTrace()
-//            }finally {
-//                popUpMenu.show()
-//            }
-//            true
-//        }
-//    }
-//}
