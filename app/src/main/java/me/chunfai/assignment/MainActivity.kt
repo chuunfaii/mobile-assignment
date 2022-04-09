@@ -1,79 +1,41 @@
 package me.chunfai.assignment
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-
+import androidx.fragment.app.Fragment
+import me.chunfai.assignment.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
+    private val favouritesFragment = FavouritesFragment()
+    private val homeFragment = HomeFragment()
+    private val profileFragment = ProfileFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val homeButtonRegister = findViewById<Button>(R.id.homeButtonRegister)
-        val homeButtonLogin = findViewById<Button>(R.id.homeButtonLogin)
-        val homeButtonUserProfile = findViewById<Button>(R.id.homeButtonUserProfile)
-        val homeButtonAddRestaurant = findViewById<Button>(R.id.homeButtonAddRestaurant)
-        val homeButtonFavourite = findViewById<Button>(R.id.homeButtonFavourites)
-        val homeButtonRestaurantDetail = findViewById<Button>(R.id.homeButtonRestaurantDetail)
-        val homeButtonAddReview = findViewById<Button>(R.id.homeButtonAddReview)
-        val homeButtonHomepage = findViewById<Button>(R.id.homeButtonHomepage)
-        val homeButtonSearch = findViewById<Button>(R.id.homeButtonSearch)
-        val homeButtonTestAllRestaurants = findViewById<Button>(R.id.homeButtonTestAllRestaurants)
+        replaceFragment(homeFragment)
 
-        homeButtonRegister.setOnClickListener {
-            val intent = Intent(this, Register::class.java)
-            startActivity(intent)
+        binding.bottomNavigation.selectedItemId = R.id.homeItem
+
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.favouritesItem -> replaceFragment(favouritesFragment)
+                R.id.homeItem -> replaceFragment(homeFragment)
+                R.id.profileItem -> replaceFragment(profileFragment)
+            }
+            true
         }
+    }
 
-        homeButtonLogin.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonUserProfile.setOnClickListener {
-            val intent = Intent(this, UserProfile::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonAddRestaurant.setOnClickListener {
-            val intent = Intent(this, AddRestaurant::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonFavourite.setOnClickListener {
-            val intent = Intent(this, Favourites::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonRestaurantDetail.setOnClickListener {
-            val intent = Intent(this, Restaurant_detail::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonAddReview.setOnClickListener {
-            val intent = Intent(this, AddReview::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonHomepage.setOnClickListener {
-            val intent = Intent(this, Homepage::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonSearch.setOnClickListener {
-            val intent = Intent(this, Search::class.java)
-            startActivity(intent)
-        }
-
-        homeButtonTestAllRestaurants.setOnClickListener {
-            val intent = Intent(this, TestAllRestaurants::class.java)
-            startActivity(intent)
-        }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
 }
