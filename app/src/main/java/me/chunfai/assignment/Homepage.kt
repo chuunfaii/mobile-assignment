@@ -21,7 +21,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
     private lateinit var binding: ActivityHomepageBinding
 
     private lateinit var staggeredGridLayoutManager: StaggeredGridLayoutManager
-    private lateinit var adapter: RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>
+    private lateinit var adapter: RecyclerView.Adapter<RestaurantAdapter.ViewHolder>
 
     private lateinit var database: FirebaseFirestore
 
@@ -59,7 +59,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
             getRestaurantIds(uid)
             getRestaurants()
 
-            adapter = FavouriteRestaurantAdapter(restaurants)
+            adapter = RestaurantAdapter(restaurants)
             binding.homepageRecyclerView.adapter = adapter
         }
     }
