@@ -115,49 +115,12 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="30dp"/>
-
-    <ImageView
-        android:id="@+id/option_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_more_vert_24"
-        android:background="@color/white"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="35dp"
-        android:layout_alignParentEnd="true"
-         />
-    </RelativeLayout>
-
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="35dp"
-        android:progressBackgroundTint="#FBBC00" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="30dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/activity_review_adapter"/>
 
     </LinearLayout>
 
