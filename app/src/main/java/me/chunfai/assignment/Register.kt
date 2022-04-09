@@ -25,8 +25,6 @@ class Register : AppCompatActivity() {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        supportActionBar?.hide()
-
         binding.btnSignUp.setOnClickListener { signUp() }
 
         binding.textLogin.setOnClickListener {
