@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.*
@@ -19,9 +20,12 @@ class Homepage : AppCompatActivity() , CoroutineScope {
 
     private lateinit var binding: ActivityHomepageBinding
 
-    private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var database: FirebaseFirestore
+    private lateinit var staggeredGridLayoutManager: StaggeredGridLayoutManager
     private lateinit var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+
+    private lateinit var database: FirebaseFirestore
+
+    private lateinit var restaurantIds: MutableList<String>
     private lateinit var restaurants: MutableList<Restaurant>
 
     private var job: Job = Job()
@@ -32,8 +36,8 @@ class Homepage : AppCompatActivity() , CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+//    private lateinit var layoutManager: RecyclerView.LayoutManager
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,45 +46,63 @@ class Homepage : AppCompatActivity() , CoroutineScope {
 
         database = FirebaseFirestore.getInstance()
 
+        restaurantIds = mutableListOf()
         restaurants = mutableListOf()
 
-        layoutManager = LinearLayoutManager(this)
-        binding.homepageRecyclerView.layoutManager = layoutManager
+        staggeredGridLayoutManager =
+            StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+        binding.homepageRecyclerView.layoutManager = staggeredGridLayoutManager
+
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
         launch {
-            getAllRestaurants()
+            getRestaurantIds(uid)
+            getRestaurants()
 
-            adapter = RecyclerAdapter(restaurants)
+//            adapter = FavouriteRestaurantAdapter(restaurants)
             binding.homepageRecyclerView.adapter = adapter
         }
     }
 
-    private suspend fun getAllRestaurants() {
+    private suspend fun getRestaurants() {
         val restaurantsRef = database.collection("restaurants")
         val snapshot = restaurantsRef.get().await()
 
         for (document in snapshot.documents) {
-            val id = document.id
-            val name = document.get("name").toString()
-            val address = document.get("address").toString()
-            val openTime = document.get("openTime").toString()
-            val closeTime = document.get("closeTime").toString()
-            val contact = document.get("contact").toString()
-            val description = document.get("description").toString()
-            val imageName = document.get("imageName").toString()
+            if (restaurantIds.contains(document.id)) {
+                val id = document.id
+                val name = document.get("name").toString()
+                val address = document.get("address").toString()
+                val openTime = document.get("openTime").toString()
+                val closeTime = document.get("closeTime").toString()
+                val contact = document.get("contact").toString()
+                val description = document.get("description").toString()
+                val imageName = document.get("imageName").toString()
 
-            val restaurant = Restaurant(
-                id,
-                name,
-                address,
-                openTime,
-                closeTime,
-                contact,
-                description,
-                imageName
-            )
+                val restaurant = Restaurant(
+                    id,
+                    name,
+                    address,
+                    openTime,
+                    closeTime,
+                    contact,
+                    description,
+                    imageName
+                )
 
-            restaurants.add(restaurant)
+                restaurants.add(restaurant)
+            }
+        }
+    }
+
+    private suspend fun getRestaurantIds(uid: String) {
+        val favouritesRef = database.collection("favorites")
+        val snapshot = favouritesRef.get().await()
+
+        for (document in snapshot.documents) {
+            if (document.getBoolean(uid) != null) {
+                restaurantIds.add(document.id)
+            }
         }
     }
 

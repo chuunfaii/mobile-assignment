@@ -1,70 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/homeButtonRegister"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register" />
+        android:background="@android:color/white"
+        app:elevation="24dp"
+        app:itemRippleColor="@color/colorPrimaryRipple"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
-    <Button
-        android:id="@+id/homeButtonLogin"
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/homeButtonUserProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="User Profile" />
-
-    <Button
-        android:id="@+id/homeButtonAddRestaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Restaurant" />
-
-    <Button
-        android:id="@+id/homeButtonFavourites"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Favourites" />
-
-    <Button
-        android:id="@+id/homeButtonRestaurantDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Restaurant Detail" />
-
-    <Button
-        android:id="@+id/homeButtonAddReview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Review" />
-
-    <Button
-        android:id="@+id/homeButtonHomepage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Homepage" />
-
-    <Button
-        android:id="@+id/homeButtonSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search" />
-
-    <Button
-        android:id="@+id/homeButtonTestAllRestaurants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="All Restaurants" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
