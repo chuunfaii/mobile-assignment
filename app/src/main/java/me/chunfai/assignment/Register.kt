@@ -1,5 +1,6 @@
 package me.chunfai.assignment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -24,15 +25,23 @@ class Register : AppCompatActivity() {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        binding.btnSignUp.setOnClickListener { signUpUser() }
+        supportActionBar?.hide()
+
+        binding.btnSignUp.setOnClickListener { signUp() }
+
+        binding.textLogin.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
-    private fun signUpUser() {
-        val firstName = binding.editFirstName.text.toString()
-        val lastName = binding.editLastName.text.toString()
-        val email = binding.editEmail.text.toString()
-        val password = binding.editPassword.text.toString()
-        val passwordConfirmation = binding.editPasswordConfirmation.text.toString()
+    private fun signUp() {
+        val firstName = binding.editFirstName.editText?.text.toString()
+        val lastName = binding.editLastName.editText?.text.toString()
+        val email = binding.editEmail.editText?.text.toString()
+        val password = binding.editPassword.editText?.text.toString()
+        val passwordConfirmation = binding.editPasswordConfirmation.editText?.text.toString()
 
         if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank() || passwordConfirmation.isBlank()) {
             Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
@@ -47,8 +56,14 @@ class Register : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 val uid: String? = FirebaseAuth.getInstance().currentUser?.uid
-                writeNewUser(uid, firstName, lastName, email)
+
+                writeUser(uid, firstName, lastName, email)
+
                 Toast.makeText(this, "Account has been registered successfully.", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+
                 finish()
             } else {
                 Toast.makeText(this, "This email already exists. Please try another email.", Toast.LENGTH_LONG).show()
@@ -56,12 +71,10 @@ class Register : AppCompatActivity() {
         }
     }
 
-    private fun writeNewUser(uid: String?, firstName: String, lastName: String, email: String) {
+    private fun writeUser(uid: String?, firstName: String, lastName: String, email: String) {
         val user = User(firstName, lastName, email)
 
-        if (uid != null) {
-            database.collection("users").document(uid).set(user)
-        }
+        database.collection("users").document(uid!!).set(user)
     }
 
 }
