@@ -41,6 +41,8 @@ class Login : AppCompatActivity(), CoroutineScope {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
+        supportActionBar?.hide()
+
         binding.btnLogin.setOnClickListener { login() }
 
         binding.textSignUp.setOnClickListener {
