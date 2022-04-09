@@ -54,6 +54,11 @@ class Login : AppCompatActivity(), CoroutineScope {
         val email = binding.editEmail.editText?.text.toString()
         val password = binding.editPassword.editText?.text.toString()
 
+        if (email.isBlank() || password.isBlank()) {
+            Toast.makeText(this, "All fields are required to input.", Toast.LENGTH_LONG).show()
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 val uid = FirebaseAuth.getInstance().currentUser!!.uid
