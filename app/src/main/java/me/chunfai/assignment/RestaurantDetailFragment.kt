@@ -36,7 +36,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private lateinit var binding: FragmentRestaurantDetailBinding
 
-    //    private lateinit var bindingReview: ActivityReviewAdapterBinding
+    //private lateinit var bindingReview: ActivityReviewAdapterBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
 
@@ -72,7 +72,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
-//        bindingReview = DataBindingUtil.inflate(inflater,R.layout.activity_review_adapter,container,false)
+        //bindingReview = DataBindingUtil.inflate(inflater,R.layout.activity_review_adapter,container,false)
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         database = FirebaseFirestore.getInstance()
@@ -151,7 +151,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         viewLifecycleOwner.lifecycleScope.launch {
             getAllReview()
             getAvgRating()
-
+            setRecyclerView()
         }
     }
 
@@ -283,6 +283,12 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         var avgRating = totalRating / reviewCount
 
         binding.ratingBar.rating = avgRating
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerView.layoutManager = linearLayoutManager
+        adapter = ReviewAdapter(reviews)
+        binding.recyclerView.adapter = adapter
     }
 }
 
