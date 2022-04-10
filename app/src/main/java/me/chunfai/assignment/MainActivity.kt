@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             val user = getUser(uid)
             val restaurants = getAllRestaurants()
 
-            sharedViewModel.setUser(user)
-            sharedViewModel.setRestaurants(restaurants)
+            sharedViewModel.user = user
+            sharedViewModel.restaurants = restaurants
         }
     }
 
