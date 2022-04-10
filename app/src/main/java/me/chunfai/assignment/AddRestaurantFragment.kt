@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -52,10 +51,13 @@ class AddRestaurantFragment : Fragment() {
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         val bottomNavigation =
-            (activity as MainActivity).findViewById<BottomNavigationView>(androidx.browser.R.id.bottom)
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        Log.i("AddRestaurantFragment", bottomNavigation.toString())
+        bottomNavigation.visibility = View.GONE
 
+        binding.btnCancel.setOnClickListener {
+            (activity as MainActivity).supportFragmentManager.popBackStackImmediate()
+        }
         binding.btnSelect.setOnClickListener { selectImage() }
         binding.btnCamera.setOnClickListener { openCamera() }
         binding.btnSubmit.setOnClickListener { addRestaurant() }

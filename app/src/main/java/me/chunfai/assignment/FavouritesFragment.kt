@@ -1,6 +1,7 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -54,6 +56,11 @@ class FavouritesFragment : Fragment(), CoroutineScope {
         database = FirebaseFirestore.getInstance()
 
         favRestaurants = mutableListOf()
+
+        val bottomNavigation =
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNavigation.visibility = View.VISIBLE
 
         return binding.root
     }

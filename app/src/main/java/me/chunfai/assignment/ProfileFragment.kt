@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -42,6 +43,11 @@ class ProfileFragment : Fragment() {
         database = FirebaseFirestore.getInstance()
 
         user = sharedViewModel.user
+
+        val bottomNavigation =
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNavigation.visibility = View.VISIBLE
 
         binding.editFirstName.editText?.setText(user?.firstName)
         binding.editLastName.editText?.setText(user?.lastName)
