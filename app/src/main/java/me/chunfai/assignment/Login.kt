@@ -41,6 +41,11 @@ class Login : AppCompatActivity(), CoroutineScope {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
+        if (auth.currentUser != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnLogin.setOnClickListener { login() }
 
         binding.textSignUp.setOnClickListener {
