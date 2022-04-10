@@ -34,10 +34,13 @@
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:contentDescription="content description"
-            app:srcCompat="@drawable/add_items" />
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="1dp"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/main_color"
+            tools:ignore="ContentDescription" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

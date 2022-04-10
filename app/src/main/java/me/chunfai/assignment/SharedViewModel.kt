@@ -8,4 +8,8 @@ class SharedViewModel : ViewModel() {
     var restaurants: MutableList<Restaurant> = mutableListOf()
     var selectedrestaurants:Restaurant? = Restaurant()
 
+    fun resetData() {
+        restaurants = mutableListOf()
+    }
+
 }

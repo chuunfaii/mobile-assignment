@@ -137,6 +137,10 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
         bindingReview.btnUpdate.setOnClickListener{
             updateReview()
         }
+
+        bindingReview.btnCancel.setOnClickListener{
+            finish()
+        }
     }
 
     private fun store(){

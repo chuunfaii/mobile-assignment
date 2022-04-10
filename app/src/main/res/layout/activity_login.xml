@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/welcome_to_foodie"/>
+            android:text="@string/welcome_back" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editEmail"
@@ -41,12 +41,12 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:autofillHints="emailAddress"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress">
+            android:hint="@string/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

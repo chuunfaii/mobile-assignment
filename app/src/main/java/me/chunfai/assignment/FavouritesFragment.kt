@@ -1,6 +1,7 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,7 +20,7 @@ import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentFavouritesBinding
 import kotlin.coroutines.CoroutineContext
 
-class FavouritesFragment : Fragment(R.layout.fragment_favourites), CoroutineScope {
+class FavouritesFragment : Fragment(), CoroutineScope {
 
     private lateinit var binding: FragmentFavouritesBinding
 
@@ -55,6 +57,11 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites), CoroutineScop
 
         favRestaurants = mutableListOf()
 
+        val bottomNavigation =
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNavigation.visibility = View.VISIBLE
+
         return binding.root
     }
 
@@ -78,6 +85,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites), CoroutineScop
         for (document in snapshot.documents) {
             if (document.getBoolean(uid) != null) {
                 val restaurant = getRestaurant(document.id)
+                Log.i("FavFragment1", restaurant.toString())
                 favRestaurants.add(restaurant)
             }
         }
@@ -116,6 +124,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites), CoroutineScop
 
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
+        Log.i("FavFrag2", favRestaurants.toString())
         adapter = FavouriteRestaurantAdapter(favRestaurants)
         binding.recyclerView.adapter = adapter
     }

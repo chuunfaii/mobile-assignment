@@ -32,13 +32,24 @@
     <string name="delete_review">Delete</string>
     <string name="review_menu" />
     <string name="enter_you_review">Enter you review</string>
-    <string name="restaurant_name">Name:</string>
-    <string name="welcome_back">Welcome back! 👋</string>
+    <string name="restaurant_name">Name</string>
     <string name="favourites">Favourites</string>
     <string name="home_fragment">Home Fragment</string>
     <string name="favourites_fragment">Favourites Fragment</string>
     <string name="profile_fragment">Profile Fragment</string>
     <string name="logout">Logout</string>
+    <string name="add_floating_action_button">Add floating action button</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_restaurant">Add New Restaurant</string>
+    <string name="select_image">Select Image</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_hours">Open Hours</string>
+    <string name="closing_hours">Closing Hours</string>
+    <string name="restaurant_address">Restaurant Address</string>
+    <string name="restaurant_contact_no">Restaurant Contact No.</string>
+    <string name="restaurant_description">Restaurant Description</string>
+    <string name="cancel">Cancel</string>
+    <string name="welcome_back">Welcome back! 👋</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

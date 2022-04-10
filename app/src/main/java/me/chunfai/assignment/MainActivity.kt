@@ -1,11 +1,10 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -67,6 +66,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setViewModel()
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
@@ -97,7 +104,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         return User(firstName, lastName, email)
     }
 
-    private suspend fun getAllRestaurants(): MutableList<Restaurant> {
+    suspend fun getAllRestaurants(): MutableList<Restaurant> {
         val restaurantsRef = database.collection("restaurants")
         val snapshot = restaurantsRef.get().await()
 
