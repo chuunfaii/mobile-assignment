@@ -106,19 +106,19 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_edit ->
-                        /*Toast.makeText(
+                        Toast.makeText(
                             this@Restaurant_detail,
                             "You Clicked : " + item.title,
                             Toast.LENGTH_SHORT
-                        ).show()*/
-                        editReview()
+                        ).show()
+//                        editReview()
                     R.id.action_delete ->
-                        /*Toast.makeText(
+                        Toast.makeText(
                             this@Restaurant_detail,
                             "You Clicked : " + item.title,
                             Toast.LENGTH_SHORT
-                        ).show()*/
-                        deleteReview()
+                        ).show()
+//                        deleteReview()
                 }
                 true
             })
@@ -133,13 +133,13 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
             startActivity(intent)
         }
 
-        bindingReview.btnUpdate.setOnClickListener{
-            updateReview()
-        }
-
-        bindingReview.btnCancel.setOnClickListener{
-            finish()
-        }
+//        bindingReview.btnUpdate.setOnClickListener{
+//            updateReview()
+//        }
+//
+//        bindingReview.btnCancel.setOnClickListener{
+//            finish()
+//        }
     }
 
     private fun store(){
@@ -181,51 +181,51 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
         }
     }
     
-    private fun editReview(){
-        val editReview = findViewById<EditText>(R.id.editReview)
-        val displayReview = findViewById<TextView>(R.id.user_review)
-        val cancelBtn = findViewById<Button>(R.id.btnCancel)
-        val updateBtn = findViewById<Button>(R.id.btnUpdate)
+//    private fun editReview(){
+//        val editReview = findViewById<EditText>(R.id.editReview)
+//        val displayReview = findViewById<TextView>(R.id.user_review)
+//        val cancelBtn = findViewById<Button>(R.id.btnCancel)
+//        val updateBtn = findViewById<Button>(R.id.btnUpdate)
+//
+//        editReview.visibility = View.VISIBLE
+//        cancelBtn.visibility = View.VISIBLE
+//        updateBtn.visibility = View.VISIBLE
+//        displayReview.visibility = View.GONE
+//
+//        val review  = intent.getSerializableExtra("review") as Review
+//        val reviewId = review.id.toString()
+//
+//        val reviewRef = database.collection("reviews").document(reviewId)
+//        reviewRef.get().addOnSuccessListener {
+//            val comment: String? = it.getString("review")
+//            displayReview.text = comment
+//        }
+//        editReview.requestFocus()
+//        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.showSoftInput(editReview, 0)
+//    }
 
-        editReview.visibility = View.VISIBLE
-        cancelBtn.visibility = View.VISIBLE
-        updateBtn.visibility = View.VISIBLE
-        displayReview.visibility = View.GONE
-
-        val review  = intent.getSerializableExtra("review") as Review
-        val reviewId = review.id.toString()
-
-        val reviewRef = database.collection("reviews").document(reviewId)
-        reviewRef.get().addOnSuccessListener {
-            val comment: String? = it.getString("review")
-            displayReview.text = comment
-        }
-        editReview.requestFocus()
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(editReview, 0)
-    }
-
-    private fun updateReview(){
-        val editReview = findViewById<EditText>(R.id.editReview)
-        val displayReview = findViewById<TextView>(R.id.user_review)
-        val cancelBtn = findViewById<Button>(R.id.btnCancel)
-        val updateBtn = findViewById<Button>(R.id.btnUpdate)
-
-        val reviewText = bindingReview.editReview.editText?.text.toString()
-
-        val review  = intent.getSerializableExtra("review") as Review
-        val reviewId = review.id.toString()
-
-        val reviewRef = Review(reviewText)
-        database.collection("reviews").document(reviewId).set(reviewRef)
-
-        editReview.visibility = View.GONE
-        cancelBtn.visibility = View.GONE
-        updateBtn.visibility = View.GONE
-        displayReview.visibility = View.VISIBLE
-
-        Toast.makeText(this, "Your review has been updated", Toast.LENGTH_SHORT).show()
-    }
+//    private fun updateReview(){
+//        val editReview = findViewById<EditText>(R.id.editReview)
+//        val displayReview = findViewById<TextView>(R.id.user_review)
+//        val cancelBtn = findViewById<Button>(R.id.btnCancel)
+//        val updateBtn = findViewById<Button>(R.id.btnUpdate)
+//
+////        val reviewText = bindingReview.editReview.editText?.text.toString()
+//
+//        val review  = intent.getSerializableExtra("review") as Review
+//        val reviewId = review.id.toString()
+//
+////        val reviewRef = Review(reviewText)
+////        database.collection("reviews").document(reviewId).set(reviewRef)
+////
+////        editReview.visibility = View.GONE
+////        cancelBtn.visibility = View.GONE
+////        updateBtn.visibility = View.GONE
+////        displayReview.visibility = View.VISIBLE
+////
+////        Toast.makeText(this, "Your review has been updated", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun deleteReview(){
         val review  = intent.getSerializableExtra("review") as Review
