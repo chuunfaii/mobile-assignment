@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Register">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_color">
@@ -12,14 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             android:gravity="center"
-            android:orientation="vertical"
-            tools:context=".Register">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 android:contentDescription="@string/logo_description"
                 android:src="@mipmap/ic_logo_foreground" />
 
@@ -40,16 +44,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:autofillHints="name"
-                android:hint="@string/first_name"
-                android:inputType="textPersonName">
+                android:hint="@string/first_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,16 +60,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:autofillHints="name"
-                android:hint="@string/last_name"
-                android:inputType="textPersonName">
+                android:hint="@string/last_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,16 +76,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:autofillHints="emailAddress"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,9 +92,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:autofillHints="password"
                 android:hint="@string/password"
                 app:endIconMode="password_toggle">
@@ -113,9 +109,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:autofillHints="password"
                 android:hint="@string/password_confirmation"
                 app:endIconMode="password_toggle">
@@ -131,9 +125,7 @@
                 android:id="@+id/btnSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:padding="15dp"
                 android:text="@string/sign_up" />
 
@@ -141,9 +133,7 @@
                 android:id="@+id/textLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="30dp"
                 android:text="@string/already_have_an_account_sign_in_here"
                 android:textAlignment="center" />
