@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.telecom.Call
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.api.Distribution
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +40,6 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private lateinit var binding: FragmentRestaurantDetailBinding
 
-    //private lateinit var bindingReview: ActivityReviewAdapterBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
 
@@ -58,12 +61,6 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         job.cancel()
     }
 
-    //    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//
-//        }
-//    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,9 +69,9 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
-        //bindingReview = DataBindingUtil.inflate(inflater,R.layout.activity_review_adapter,container,false)
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
+        auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
         users = mutableListOf()
@@ -101,33 +98,6 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         binding.restaurantAddress.text = restaurant?.address
         binding.restaurantContact.text = "Contact Number : " + restaurant?.contact
         binding.restaurantBusinessHour.text = "Business Hour : $openTime - $closeTime"
-
-        //Edit and Delete Reviews ,NID MOVE TO REVIEW Apdater
-//        val menuBtn = findViewById<ImageView>(R.id.option_menu)
-//        menuBtn.setOnClickListener {
-//            val popupMenu: PopupMenu = PopupMenu(this, menuBtn)
-//            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
-//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-//                when (item.itemId) {
-//                    R.id.action_edit ->
-//                        /*Toast.makeText(
-//                            this@Restaurant_detail,
-//                            "You Clicked : " + item.title,
-//                            Toast.LENGTH_SHORT
-//                        ).show()*/
-//                        //editReview()
-//                        R.id.action_delete->
-//                    /*Toast.makeText(
-//                            this@Restaurant_detail,
-//                            "You Clicked : " + item.title,
-//                            Toast.LENGTH_SHORT
-//                        ).show()*/
-//                    //deleteReview()
-//                }
-//                true
-//            })
-//            popupMenu.show()
-//        }
 
         binding.icFavorite.setOnClickListener { store() }
 
@@ -158,6 +128,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
     private fun store() {
         val uid = auth.currentUser!!.uid
         val restaurant = sharedViewModel.selectedRestaurant
+        Log.d("Test",uid)
 
 
         val resId = restaurant?.id
