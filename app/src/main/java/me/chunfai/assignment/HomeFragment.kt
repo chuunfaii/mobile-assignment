@@ -19,9 +19,9 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val textView = view.findViewById<TextView>(R.id.textView)
-
-        textView.text = sharedViewModel.user?.firstName
+//        val textView = view.findViewById<TextView>(R.id.textView)
+//
+//        textView.text = sharedViewModel.user?.firstName
 
 //        sharedViewModel.user.observe(viewLifecycleOwner) {
 //            textView.text = it.firstName + " " + it.lastName

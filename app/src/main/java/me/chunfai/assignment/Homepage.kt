@@ -36,7 +36,6 @@ class Homepage : AppCompatActivity() , CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
-//    private lateinit var layoutManager: RecyclerView.LayoutManager
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +50,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
 
         staggeredGridLayoutManager =
             StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
-        binding.homepageRecyclerView.layoutManager = staggeredGridLayoutManager
+        binding.recyclerView.layoutManager = staggeredGridLayoutManager
 
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
@@ -60,7 +59,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
             getRestaurants()
 
             adapter = RestaurantAdapter(restaurants)
-            binding.homepageRecyclerView.adapter = adapter
+            binding.recyclerView.adapter = adapter
         }
     }
 
@@ -96,7 +95,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
     }
 
     private suspend fun getRestaurantIds(uid: String) {
-        val favouritesRef = database.collection("favorites")
+        val favouritesRef = database.collection("restaurants")
         val snapshot = favouritesRef.get().await()
 
         for (document in snapshot.documents) {
