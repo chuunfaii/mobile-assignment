@@ -44,6 +44,7 @@ class Login : AppCompatActivity(), CoroutineScope {
         if (auth.currentUser != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.btnLogin.setOnClickListener { login() }
