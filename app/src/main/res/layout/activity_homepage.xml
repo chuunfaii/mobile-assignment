@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:background="@color/main_color"
-    android:gravity="center"
-    tools:context=".Homepage">
+    tools:context=".Homepage"
+    tools:ignore="ScrollViewCount">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/homepageRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

@@ -20,7 +20,6 @@ class RestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_homepage_cardview, parent, false)
-
         return ViewHolder(itemView)
     }
 
