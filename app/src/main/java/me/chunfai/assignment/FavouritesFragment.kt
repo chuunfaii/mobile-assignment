@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -61,6 +62,11 @@ class FavouritesFragment : Fragment(), CoroutineScope {
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         bottomNavigation.visibility = View.VISIBLE
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(false)
+        actionBar.setDisplayHomeAsUpEnabled(false)
+        actionBar.title = "Foodie"
 
         return binding.root
     }

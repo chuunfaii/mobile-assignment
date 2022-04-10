@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -54,6 +55,11 @@ class AddRestaurantFragment : Fragment() {
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         bottomNavigation.visibility = View.GONE
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = "Add New Restaurant"
 
         binding.btnCancel.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.popBackStackImmediate()

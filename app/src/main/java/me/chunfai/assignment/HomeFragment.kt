@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -62,6 +63,11 @@ class HomeFragment : Fragment(), CoroutineScope {
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         bottomNavigation.visibility = View.VISIBLE
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(false)
+        actionBar.setDisplayHomeAsUpEnabled(false)
+        actionBar.title = "Foodie"
 
         binding.floatingActionButton.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()

@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
+        setSupportActionBar(binding.topAppBar)
+
         replaceFragment(homeFragment)
 
         binding.bottomNavigation.selectedItemId = R.id.homeItem
@@ -64,6 +67,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
 
         setViewModel()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onBackPressed() {

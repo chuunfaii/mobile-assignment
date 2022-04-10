@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +49,11 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         bottomNavigation.visibility = View.VISIBLE
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(false)
+        actionBar.setDisplayHomeAsUpEnabled(false)
+        actionBar.title = "Foodie"
 
         binding.editFirstName.editText?.setText(user?.firstName)
         binding.editLastName.editText?.setText(user?.lastName)
