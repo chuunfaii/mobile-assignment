@@ -20,7 +20,7 @@ import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentHomeBinding
 import kotlin.coroutines.CoroutineContext
 
-class HomeFragment : Fragment(R.layout.fragment_home), CoroutineScope {
+class HomeFragment : Fragment(), CoroutineScope {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -92,14 +92,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), CoroutineScope {
 
         for (document in snapshot.documents) {
 
-            val restaurant = getRestaurant()
-            Log.i("Alibaba", restaurant.toString())
+            val restaurant = getRestaurant(document.id)
+            Log.i("HomeFragment1",restaurant.toString())
             restaurants.add(restaurant)
 
         }
     }
 
-    private suspend fun getRestaurant(): Restaurant {
+    private suspend fun getRestaurant(restaurantId: String): Restaurant {
         val restaurantRef = database.collection("restaurants")
         val snapshot = restaurantRef.get().await()
 
@@ -134,7 +134,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CoroutineScope {
         binding.recyclerView.layoutManager = linearLayoutManager
 
 
-        Log.i("Testing", restaurants.toString())
+        Log.i("HomeFrag2", restaurants.toString())
         adapter = RestaurantAdapter(restaurants)
 
         binding.recyclerView.adapter = adapter

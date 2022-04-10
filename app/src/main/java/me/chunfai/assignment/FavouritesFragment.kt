@@ -85,6 +85,7 @@ class FavouritesFragment : Fragment(), CoroutineScope {
         for (document in snapshot.documents) {
             if (document.getBoolean(uid) != null) {
                 val restaurant = getRestaurant(document.id)
+                Log.i("FavFragment1", restaurant.toString())
                 favRestaurants.add(restaurant)
             }
         }
@@ -123,6 +124,7 @@ class FavouritesFragment : Fragment(), CoroutineScope {
 
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
+        Log.i("FavFrag2", favRestaurants.toString())
         adapter = FavouriteRestaurantAdapter(favRestaurants)
         binding.recyclerView.adapter = adapter
     }
