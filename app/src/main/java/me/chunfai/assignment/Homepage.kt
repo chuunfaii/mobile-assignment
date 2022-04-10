@@ -58,7 +58,7 @@ class Homepage : AppCompatActivity() , CoroutineScope {
             getRestaurantIds(uid)
             getRestaurants()
 
-            adapter = RestaurantAdapter(restaurants)
+//            adapter = RestaurantAdapter(restaurants, share)
             binding.recyclerView.adapter = adapter
         }
     }

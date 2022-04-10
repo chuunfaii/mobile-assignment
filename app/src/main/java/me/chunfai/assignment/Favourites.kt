@@ -60,7 +60,7 @@ class Favourites : AppCompatActivity(), CoroutineScope {
             getFavouriteRestaurantIds(uid)
             getFavouriteRestaurants()
 
-            adapter = FavouriteRestaurantAdapter(favRestaurants)
+//            adapter = FavouriteRestaurantAdapter(favRestaurants)
             binding.recyclerView.adapter = adapter
         }
     }
