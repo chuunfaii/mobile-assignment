@@ -1,5 +1,6 @@
 package me.chunfai.assignment
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -8,23 +9,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.findFragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
-    RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>() {
+class RestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
+    RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteRestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_favourite_restaurant, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_homepage_cardview, parent, false)
+
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: FavouriteRestaurantAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RestaurantAdapter.ViewHolder, position: Int) {
         val restaurant = restaurants[position]
 
         val imageName = restaurant.imageName
@@ -45,7 +45,7 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
     override fun getItemCount() = restaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val favoriteIcon: ImageView = itemView.findViewById(R.id.favoriteIcon)
+//        private val favoriteIcon: ImageView = itemView.findViewById(R.id.favoriteIcon)
         val restaurantImage: ImageView = itemView.findViewById(R.id.restaurantImage)
         val restaurantName: TextView = itemView.findViewById(R.id.restaurantName)
 
@@ -59,21 +59,18 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
                 context.startActivity(intent)
             }
 
-            favoriteIcon.setOnClickListener {
-                val restaurant = restaurants[adapterPosition]
-
-                val activity = itemView.context as MainActivity
-                val currentFragment = itemView.findFragment<FavouritesFragment>()
-                val newFragment = FavouritesFragment()
-
-                currentFragment.lifecycleScope.launch {
-                    currentFragment.removeFromFavourites(restaurant)
-
-                    activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, newFragment)
-                        .commit()
-                }
-            }
+//            favoriteIcon.setOnClickListener {
+//                val restaurant = restaurants[adapterPosition]
+//                val context = itemView.context
+//
+//                (context as Favourites).launch {
+//                    context.removeFromFavourites(restaurant)
+//                }
+//
+//                val intent = Intent(context, Favourites::class.java)
+//                context.startActivity(intent)
+//                (context as Activity).finish()
+//            }
         }
     }
 
