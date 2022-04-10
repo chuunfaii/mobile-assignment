@@ -245,15 +245,18 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private suspend fun getAvgRating() {
         //Try to get all review ratingBar data
+        val selectedRestaurant = sharedViewModel.selectedRestaurant
         val allReview = database.collection("reviews")
         val snapshot = allReview.get().await()
         var reviewCount = 0
         var totalRating = 0f
 
         for (document in snapshot.documents) {
-            val rating = document.get("rating").toString()
-            reviewCount += 1
-            totalRating += rating.toFloat()
+            if(document.get("restaurantId")== selectedRestaurant?.id) {
+                val rating = document.get("rating").toString()
+                reviewCount += 1
+                totalRating += rating.toFloat()
+            }
         }
         var avgRating = totalRating / reviewCount
 
