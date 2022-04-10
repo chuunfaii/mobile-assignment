@@ -21,9 +21,11 @@ class HomeFragment : Fragment() {
 
         val textView = view.findViewById<TextView>(R.id.textView)
 
-        sharedViewModel.user.observe(viewLifecycleOwner) {
-            textView.text = it.firstName + " " + it.lastName
-        }
+        textView.text = sharedViewModel.user?.firstName
+
+//        sharedViewModel.user.observe(viewLifecycleOwner) {
+//            textView.text = it.firstName + " " + it.lastName
+//        }
 
 //        sharedViewModel.restaurants.observe(viewLifecycleOwner) {
 //            Toast.makeText(view.context, it.toString(), Toast.LENGTH_LONG).show()
