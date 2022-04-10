@@ -1,6 +1,5 @@
 package me.chunfai.assignment
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -9,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
@@ -18,8 +19,12 @@ import java.io.File
 class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
     RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteRestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_favourite_restaurant, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FavouriteRestaurantAdapter.ViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_favourite_restaurant, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -35,7 +40,11 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
                 holder.restaurantImage.setImageBitmap(bitmap)
             }
             .addOnFailureListener {
-                Toast.makeText(holder.itemView.context, "Failed to retrieve the image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Failed to retrieve the image",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         holder.restaurantName.text = restaurant.name
@@ -60,15 +69,18 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
 
             favoriteIcon.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
-                val context = itemView.context
 
-                (context as Favourites).launch {
-                    context.removeFromFavourites(restaurant)
+                val activity = itemView.context as MainActivity
+                val currentFragment = itemView.findFragment<FavouritesFragment>()
+                val newFragment = FavouritesFragment()
+
+                currentFragment.lifecycleScope.launch {
+                    currentFragment.removeFromFavourites(restaurant)
+
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, newFragment)
+                        .commit()
                 }
-
-                val intent = Intent(context, Favourites::class.java)
-                context.startActivity(intent)
-                (context as Activity).finish()
             }
         }
     }
