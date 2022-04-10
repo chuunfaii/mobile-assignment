@@ -125,7 +125,7 @@ class FavouritesFragment : Fragment(), CoroutineScope {
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
         Log.i("FavFrag2", favRestaurants.toString())
-        adapter = FavouriteRestaurantAdapter(favRestaurants)
+        adapter = FavouriteRestaurantAdapter(favRestaurants, sharedViewModel)
         binding.recyclerView.adapter = adapter
     }
 

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 
-class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
+class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant>, private var sharedViewModel: SharedViewModel) :
     RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteRestaurantAdapter.ViewHolder {
@@ -52,11 +52,19 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
         init {
             restaurantImage.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
-                val context = itemView.context
 
-                val intent = Intent(context, Restaurant_detail::class.java)
-                intent.putExtra("restaurant", restaurant)
-                context.startActivity(intent)
+                sharedViewModel.selectedRestaurant = restaurant
+
+                val activity = itemView.context as MainActivity
+                val currentFragment = itemView.findFragment<FavouritesFragment>()
+                val newFragment = RestaurantDetailFragment()
+
+                currentFragment.lifecycleScope.launch {
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, newFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
 
             favoriteIcon.setOnClickListener {

@@ -82,7 +82,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         reviews = mutableListOf()
 
         //Get Restaurant Details
-        val restaurant = sharedViewModel.selectedrestaurants
+        val restaurant = sharedViewModel.selectedRestaurant
 
         val openTime = restaurant?.openTime
         val closeTime = restaurant?.closeTime
@@ -158,7 +158,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private fun store() {
         val uid = auth.currentUser!!.uid
-        val restaurant = sharedViewModel.selectedrestaurants
+        val restaurant = sharedViewModel.selectedRestaurant
 
 
         val resId = restaurant?.id

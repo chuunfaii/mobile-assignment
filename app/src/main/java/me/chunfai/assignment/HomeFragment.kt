@@ -131,7 +131,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
-        adapter = RestaurantAdapter(restaurants)
+        adapter = RestaurantAdapter(restaurants, sharedViewModel)
         binding.recyclerView.adapter = adapter
     }
 

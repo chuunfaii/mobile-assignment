@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class RestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
+class RestaurantAdapter(private val restaurants: MutableList<Restaurant>, private var sharedViewModel: SharedViewModel) :
     RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
@@ -51,11 +53,19 @@ class RestaurantAdapter(private val restaurants: MutableList<Restaurant>) :
         init {
             restaurantImage.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
-                val context = itemView.context
 
-                val intent = Intent(context, Restaurant_detail::class.java)
-                intent.putExtra("restaurant", restaurant)
-                context.startActivity(intent)
+                sharedViewModel.selectedRestaurant = restaurant
+
+                val activity = itemView.context as MainActivity
+                val currentFragment = itemView.findFragment<HomeFragment>()
+                val newFragment = RestaurantDetailFragment()
+
+                currentFragment.lifecycleScope.launch {
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, newFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
 
 //            favoriteIcon.setOnClickListener {
