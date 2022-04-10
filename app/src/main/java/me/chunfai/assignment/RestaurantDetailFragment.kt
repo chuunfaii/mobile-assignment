@@ -142,30 +142,34 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
     }
 
     private suspend fun getAllReview() {
+        val selectedRestaurant = sharedViewModel.selectedRestaurant
         val reviewRef = database.collection("reviews")
         val snapshot = reviewRef.get().await()
 
         for (document in snapshot.documents) {
-            val id = document.id
-            val rating = document.get("rating").toString()
-            val restaurantId = document.get("restaurantId").toString()
-            val comment = document.get("review").toString()
-            val userId = document.get("userId").toString()
-            val user = getUser(userId)
-            val username = user.firstName + " " + user.lastName
-            val review = Review(
-                id,
-                comment,
-                restaurantId,
-                rating,
-                userId,
-                username
-            )
+            if(document.get("restaurantId")== selectedRestaurant?.id) {
+                val id = document.id
+                val rating = document.get("rating").toString()
+                val restaurantId = document.get("restaurantId").toString()
+                val comment = document.get("review").toString()
+                val userId = document.get("userId").toString()
+                val user = getUser(userId)
+                val username = user.firstName + " " + user.lastName
+                val review = Review(
+                    id,
+                    comment,
+                    restaurantId,
+                    rating,
+                    userId,
+                    username
+                )
 
-            reviews.add(review)
+                reviews.add(review)
+            }
+
         }
-    }
 
+    }
 //    private fun editReview(){
 //        val editReview = findViewById<EditText>(R.id.editReview)
 //        val displayReview = findViewById<TextView>(R.id.user_review)
