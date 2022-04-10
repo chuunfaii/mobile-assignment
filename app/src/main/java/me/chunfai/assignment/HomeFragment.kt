@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,70 +77,62 @@ class HomeFragment : Fragment(), CoroutineScope {
     override fun onResume() {
         super.onResume()
 
-//        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-
         restaurants.clear()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            getRestaurantDetails()
+            restaurants = sharedViewModel.restaurants
             setRecyclerView()
         }
     }
 
-    private suspend fun getRestaurantDetails() {
-        val restaurantRef = database.collection("restaurants")
-        val snapshot = restaurantRef.get().await()
+//    private suspend fun getRestaurantDetails() {
+//        val restaurantRef = database.collection("restaurants")
+//        val snapshot = restaurantRef.get().await()
+//
+//        for (document in snapshot.documents) {
+//
+//            val restaurant = getRestaurant(document.id)
+//            Log.i("HomeFragment1",restaurant.toString())
+//            restaurants.add(restaurant)
+//
+//        }
+//    }
 
-        for (document in snapshot.documents) {
-
-            val restaurant = getRestaurant(document.id)
-            Log.i("HomeFragment1",restaurant.toString())
-            restaurants.add(restaurant)
-
-        }
-    }
-
-    private suspend fun getRestaurant(restaurantId: String): Restaurant {
-        val restaurantRef = database.collection("restaurants")
-        val snapshot = restaurantRef.get().await()
-
-        for (document in snapshot.documents) {
-
-            val id = document.id
-            val name = document.get("name").toString()
-            val address = document.get("address").toString()
-            val openTime = document.get("openTime").toString()
-            val closeTime = document.get("closeTime").toString()
-            val contact = document.get("contact").toString()
-            val description = document.get("description").toString()
-            val imageName = document.get("imageName").toString()
-
-            return Restaurant(
-                id,
-                name,
-                address,
-                openTime,
-                closeTime,
-                contact,
-                description,
-                imageName
-            )
-
-        }
-
-        return Restaurant()
-    }
+//    private suspend fun getRestaurant(restaurantId: String): Restaurant {
+//        val restaurantRef = database.collection("restaurants")
+//        val snapshot = restaurantRef.get().await()
+//
+//        for (document in snapshot.documents) {
+//
+//            val id = document.id
+//            val name = document.get("name").toString()
+//            val address = document.get("address").toString()
+//            val openTime = document.get("openTime").toString()
+//            val closeTime = document.get("closeTime").toString()
+//            val contact = document.get("contact").toString()
+//            val description = document.get("description").toString()
+//            val imageName = document.get("imageName").toString()
+//
+//            return Restaurant(
+//                id,
+//                name,
+//                address,
+//                openTime,
+//                closeTime,
+//                contact,
+//                description,
+//                imageName
+//            )
+//
+//        }
+//
+//        return Restaurant()
+//    }
 
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
-
-
-        Log.i("HomeFrag2", restaurants.toString())
         adapter = RestaurantAdapter(restaurants)
-
         binding.recyclerView.adapter = adapter
-
-
     }
 
 }
