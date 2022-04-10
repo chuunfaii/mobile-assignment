@@ -94,28 +94,28 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
         }
         //Edit and Delete Reviews
         val menuBtn = findViewById<ImageView>(R.id.option_menu)
-        menuBtn.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(this, menuBtn)
-            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_edit ->
-                        Toast.makeText(
-                            this@Restaurant_detail,
-                            "You Clicked : " + item.title,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    R.id.action_delete ->
-                        Toast.makeText(
-                            this@Restaurant_detail,
-                            "You Clicked : " + item.title,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                }
-                true
-            })
-            popupMenu.show()
-        }
+//        menuBtn.setOnClickListener {
+//            val popupMenu: PopupMenu = PopupMenu(this, menuBtn)
+//            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
+//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    R.id.action_edit ->
+//                        Toast.makeText(
+//                            this@Restaurant_detail,
+//                            "You Clicked : " + item.title,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    R.id.action_delete ->
+//                        Toast.makeText(
+//                            this@Restaurant_detail,
+//                            "You Clicked : " + item.title,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                }
+//                true
+//            })
+//            popupMenu.show()
+//        }
 
         binding.icFavorite.setOnClickListener { store() }
 
