@@ -70,7 +70,6 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
         //Get Restaurant Details
         val restaurant = intent.getSerializableExtra("restaurant") as Restaurant
 
-
         val openTime = restaurant.openTime
         val closeTime = restaurant.closeTime
 
@@ -252,16 +251,16 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
 
     private suspend fun getAvgRating(){
         //Try to get all review ratingBar data
-        val allReview = database.collection("review")
+        val allReview = database.collection("reviews")
         val snapshot = allReview.get().await()
         var reviewCount = 0
-        var totalRating = 0
+        var totalRating = 0f
 
         for(document in snapshot.documents){
 //            var rating = allReview.rating?.toInt()
             val rating = document.get("rating").toString()
             reviewCount += 1
-            totalRating += rating.toInt()
+            totalRating += rating.toFloat()
         }
         var avgRating = totalRating / reviewCount
 

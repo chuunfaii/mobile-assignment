@@ -68,8 +68,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_restaurant_detail, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_restaurant_detail, container, false)
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
