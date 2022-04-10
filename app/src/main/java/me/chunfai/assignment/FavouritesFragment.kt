@@ -18,7 +18,7 @@ import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentFavouritesBinding
 import kotlin.coroutines.CoroutineContext
 
-class FavouritesFragment : Fragment(R.layout.fragment_favourites), CoroutineScope {
+class FavouritesFragment : Fragment(), CoroutineScope {
 
     private lateinit var binding: FragmentFavouritesBinding
 

@@ -7,31 +7,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.firestore.FirebaseFirestore
+import me.chunfai.assignment.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var database: FirebaseFirestore
+
+    private lateinit var sharedViewModel: SharedViewModel
+
+    private var restaurants: MutableList<Restaurant> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-//        val textView = view.findViewById<TextView>(R.id.textView)
-//
-//        textView.text = sharedViewModel.user?.firstName
+        binding.floatingActionButton.setOnClickListener {
+            Toast.makeText(activity, "Add restaurant", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AddRestaurantFragment())
+                .addToBackStack("null")
+                .commit()
+        }
 
-//        sharedViewModel.user.observe(viewLifecycleOwner) {
-//            textView.text = it.firstName + " " + it.lastName
-//        }
-
-//        sharedViewModel.restaurants.observe(viewLifecycleOwner) {
-//            Toast.makeText(view.context, it.toString(), Toast.LENGTH_LONG).show()
-//        }
-
-        return view
+        return binding.root
     }
 
 }
