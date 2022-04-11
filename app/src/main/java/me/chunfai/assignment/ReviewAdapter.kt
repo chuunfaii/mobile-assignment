@@ -62,12 +62,12 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.action_edit ->
-                                Toast.makeText(
+                                /*Toast.makeText(
                                     itemView.context,
                                     "You Clicked : " + item.title,
                                     Toast.LENGTH_SHORT
-                                ).show()
-                            //editReview()
+                                ).show()*/
+                                editReview()
                             R.id.action_delete ->
                                 /*Toast.makeText(
                                     itemView.context,
@@ -96,12 +96,12 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 //            }
 //            database.collection("reviews").document(reviewId).delete()
             database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
-                Toast.makeText(itemView.context, "You have deleted your review", Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
             }
 
         }
 
-        /*private fun editReview(){
+        private fun editReview(){
             val editReview : TextInputLayout = itemView.findViewById(R.id.editReview)
             val displayReview : TextView = itemView.findViewById(R.id.user_review)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
@@ -122,7 +122,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             }
             editReview.requestFocus()
 
-        }*/
+        }
 
     }
 
