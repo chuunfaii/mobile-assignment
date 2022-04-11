@@ -1,16 +1,16 @@
 package me.chunfai.assignment
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -111,9 +111,10 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
         }
 
         binding.review.setOnClickListener {
-            val intent = Intent(context, AddReview::class.java)
-            intent.putExtra("restaurantId", restaurant?.id)
-            startActivity(intent)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AddReviewFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         launch {
@@ -121,10 +122,6 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             setAverageRating()
             setRecyclerView()
         }
-
-//    bindingReview.btnUpdate.setOnClickListener{
-//        updateReview()
-//    }
 
         return binding.root
     }
@@ -179,67 +176,6 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             }
         }
     }
-
-//    private fun editReview(){
-//        val editReview = findViewById<EditText>(R.id.editReview)
-//        val displayReview = findViewById<TextView>(R.id.user_review)
-//        val cancelBtn = findViewById<Button>(R.id.btnCancel)
-//        val updateBtn = findViewById<Button>(R.id.btnUpdate)
-//
-//        editReview.visibility = View.VISIBLE
-//        cancelBtn.visibility = View.VISIBLE
-//        updateBtn.visibility = View.VISIBLE
-//        displayReview.visibility = View.GONE
-//
-//        val review  = intent.getSerializableExtra("review") as Review
-//        //val reviewId = review.id.toString()
-//        val comment = review.review.toString()
-//        /*val reviewRef = database.collection("reviews").document(reviewId)
-//        reviewRef.get().addOnSuccessListener {
-//            val comment: String? = it.getString("review")
-//        }*/
-//                displayReview.text = comment
-//        editReview.requestFocus()
-//        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.showSoftInput(editReview, 0)
-//    }
-//
-//    private fun updateReview(){
-//        val editReview = findViewById<EditText>(R.id.editReview)
-//        val displayReview = findViewById<TextView>(R.id.user_review)
-//        val cancelBtn = findViewById<Button>(R.id.btnCancel)
-//        val updateBtn = findViewById<Button>(R.id.btnUpdate)
-//
-//        val reviewText = bindingReview.editReview.editText?.text.toString()
-//
-//        val review  = intent.getSerializableExtra("review") as Review
-//        val reviewId = review.id.toString()
-//
-//        val revRef = database.collection("reviews").document(reviewId)
-//
-//        val updates = hashMapOf<String, Any>(
-//            "review" to reviewText
-//        )
-//
-//        revRef.update(updates)
-//
-//        editReview.visibility = View.GONE
-//        cancelBtn.visibility = View.GONE
-//        updateBtn.visibility = View.GONE
-//        displayReview.visibility = View.VISIBLE
-//
-//        Toast.makeText(this, "Your review has been updated", Toast.LENGTH_SHORT).show()
-//    }
-
-//    private fun deleteReview() {
-//        val review = intent.getSerializableExtra("review") as Review
-//        val reviewId = review.id.toString()
-//
-//        val reviewRef = database.collection("reviews").document(reviewId)
-//        reviewRef.delete()
-//
-//        Toast.makeText(this, "Your review has been removed", Toast.LENGTH_SHORT).show()
-//    }
 
     private suspend fun getUser(uid: String): User {
         val userRef = database.collection("users").document(uid)
