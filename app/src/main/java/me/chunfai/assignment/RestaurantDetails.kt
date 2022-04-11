@@ -93,8 +93,8 @@ class RestaurantDetails : AppCompatActivity() ,CoroutineScope{
             getAllReview()
             getAvgRating()
 
-            adapter = ReviewAdapter(reviews)
-            binding.recyclerView.adapter = adapter
+            //adapter = ReviewAdapter(reviews)
+            //binding.recyclerView.adapter = adapter
         }
         //Edit and Delete Reviews
         val menuBtn = findViewById<ImageView>(R.id.option_menu)

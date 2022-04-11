@@ -265,7 +265,7 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
 
     private fun setRecyclerView() {
         binding.recyclerView.layoutManager = linearLayoutManager
-        adapter = ReviewAdapter(reviews)
+        adapter = ReviewAdapter(reviews, sharedViewModel)
         binding.recyclerView.adapter = adapter
     }
 }
