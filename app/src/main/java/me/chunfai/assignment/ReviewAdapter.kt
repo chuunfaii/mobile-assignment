@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
-import me.chunfai.assignment.databinding.ActivityReviewAdapterBinding
 import java.io.File
 
 class ReviewAdapter(private val reviews: MutableList<Review>, private val sharedViewModel: SharedViewModel) :
@@ -84,16 +83,12 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 
         private fun deleteReview() {
             database = FirebaseFirestore.getInstance()
-            //val reviewId = itemView.id.toString()
+
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
             val selectedReview = sharedViewModel.selectedReview.value
             val reviewId = restaurantId + "_" + uid
-//            val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
-//            reviewRef.delete().addOnSuccessListener {
-//                Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
-//            }
-//            database.collection("reviews").document(reviewId).delete()
+
             database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
                 Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
             }
@@ -111,13 +106,12 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             updateBtn.visibility = View.VISIBLE
             displayReview.visibility = View.GONE
 
-            /*val review  = intent.getSerializableExtra("review") as Review
-            val reviewId = review.id.toString()*/
+
             database = FirebaseFirestore.getInstance()
-            //val reviewId = itemView.id.toString()
+
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
-            //val selectedReview = sharedViewModel.selectedReview.value
+
             val reviewId = restaurantId + "_" + uid
 
             val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
@@ -131,17 +125,17 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 
         private fun updateReview(){
             val editReview : TextInputLayout = itemView.findViewById(R.id.editReview)
-            val displayReview : TextView = itemView.findViewById(R.id.user_review)
+            val displayReview : TextView = itemView.findViewById(R.id.textReview)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
             val updateBtn : Button = itemView.findViewById(R.id.btnUpdate)
 
             val reviewText = editReview.editText?.text.toString()
 
             database = FirebaseFirestore.getInstance()
-            //val reviewId = itemView.id.toString()
+
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
-            //val selectedReview = sharedViewModel.selectedReview.value
+
             val reviewId = restaurantId + "_" + uid
 
             val revRef = database.collection("reviews").document(reviewId)
@@ -162,7 +156,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 
         private fun cancelReview(){
             val editReview : TextInputLayout = itemView.findViewById(R.id.editReview)
-            val displayReview : TextView = itemView.findViewById(R.id.user_review)
+            val displayReview : TextView = itemView.findViewById(R.id.textReview)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
             val updateBtn : Button = itemView.findViewById(R.id.btnUpdate)
 

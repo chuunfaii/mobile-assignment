@@ -56,10 +56,9 @@
                 android:hint="Edit Review"
                 android:inputType="text"
                 android:minHeight="48dp"
+                android:layout_marginTop="5dp"
                 android:text=""
-                android:padding="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:visibility="gone"
                 tools:layout_editor_absoluteX="28dp"
                 tools:layout_editor_absoluteY="53dp">
 
@@ -77,9 +76,8 @@
                     android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
                     android:text="Cancel" />
 
                 <Button
@@ -87,9 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
                     android:text="Update" />
 
             </RelativeLayout>

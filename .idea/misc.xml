@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/Foodie/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.23233695652173914" />
         <entry key="..\:/AndroidStudio/Foodie/app/src/main/res/layout/activity_review_adapter.xml" value="0.22509057971014493" />
         <entry key="..\:/AndroidStudio/Foodie/app/src/main/res/layout/fragment_restaurant_detail.xml" value="0.23233695652173914" />
+        <entry key="..\:/AndroidStudio/Foodie/app/src/main/res/layout/item_review.xml" value="0.23233695652173914" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/field.xml" value="0.215" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/file_upload_image_border.xml" value="0.215" />
         <entry key="..\:/AndroidStudio/practical/mobile-assignment/app/src/main/res/drawable/file_upload_round_button.xml" value="0.215" />
@@ -31,7 +33,6 @@
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_main.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_restaurant_detail.xml" value="0.1" />
-        <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_review_adapter.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_search.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_test_all_restaurants.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/activity_user_profile.xml" value="0.36666666666666664" />
@@ -42,9 +43,7 @@
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/fragment_favourites.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/fragment_home.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
-        <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/fragment_restaurant_details.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/home_fragment.xml" value="0.30085470085470084" />
-        <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/item_review.xml" value="0.1" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/recyclerview_restaurant_row.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/register2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chun/AndroidStudioProjects/Assignment/app/src/main/res/layout/test_restaurant_button.xml" value="0.1" />
