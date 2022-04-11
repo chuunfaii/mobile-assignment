@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class FavouriteRestaurantAdapter(
-    private val restaurants: MutableList<Restaurant>,
+    private val favRestaurants: MutableList<Restaurant>,
     private var sharedViewModel: SharedViewModel
 ) :
     RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>() {
@@ -33,7 +33,9 @@ class FavouriteRestaurantAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FavouriteRestaurantAdapter.ViewHolder, position: Int) {
-        val restaurant = restaurants[position]
+        val restaurant = favRestaurants[position]
+        val restaurantOpenHours = restaurant.openTime
+        val restaurantClosingHours = restaurant.closeTime
 
         val imageName = restaurant.imageName
         val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
@@ -52,13 +54,11 @@ class FavouriteRestaurantAdapter(
             }
 
         holder.restaurantName.text = restaurant.name
-        val restaurantOpenHours = restaurant.openTime
-        val restaurantClosingHours = restaurant.closeTime
         holder.restaurantHours.text = "$restaurantOpenHours - $restaurantClosingHours"
         holder.restaurantDescription.text = restaurant.description
     }
 
-    override fun getItemCount() = restaurants.size
+    override fun getItemCount() = favRestaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val favouriteIcon: ImageView = itemView.findViewById(R.id.favouriteIcon)
@@ -70,9 +70,9 @@ class FavouriteRestaurantAdapter(
 
         init {
             restaurantCard.setOnClickListener {
-                val restaurant = restaurants[adapterPosition]
+                val restaurant = favRestaurants[adapterPosition]
 
-                sharedViewModel.selectedRestaurant = restaurant
+                sharedViewModel.setSelectedRestaurant(restaurant)
 
                 val activity = itemView.context as MainActivity
                 val fragment = itemView.findFragment<FavouritesFragment>()
@@ -86,7 +86,7 @@ class FavouriteRestaurantAdapter(
             }
 
             favouriteIcon.setOnClickListener {
-                val restaurant = restaurants[adapterPosition]
+                val restaurant = favRestaurants[adapterPosition]
 
                 val activity = itemView.context as MainActivity
                 val fragment = itemView.findFragment<FavouritesFragment>()

@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentFavouritesBinding
@@ -68,71 +69,16 @@ class FavouritesFragment : Fragment(), CoroutineScope {
         actionBar.setDisplayHomeAsUpEnabled(false)
         actionBar.title = "Foodie"
 
+        sharedViewModel.favouriteRestaurants.observe(viewLifecycleOwner) {
+            favRestaurants = it
+
+            adapter = FavouriteRestaurantAdapter(favRestaurants, sharedViewModel)
+
+            binding.recyclerView.layoutManager = linearLayoutManager
+            binding.recyclerView.adapter = adapter
+        }
+
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-
-        favRestaurants.clear()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            getFavouriteRestaurants(uid)
-            setRecyclerView()
-        }
-    }
-
-    private suspend fun getFavouriteRestaurants(uid: String) {
-        val favouritesRef = database.collection("favorites")
-        val snapshot = favouritesRef.get().await()
-
-        for (document in snapshot.documents) {
-            if (document.getBoolean(uid) != null) {
-                val restaurant = getRestaurant(document.id)
-                Log.i("FavFragment1", restaurant.toString())
-                favRestaurants.add(restaurant)
-            }
-        }
-    }
-
-    private suspend fun getRestaurant(restaurantId: String): Restaurant {
-        val restaurantsRef = database.collection("restaurants")
-        val snapshot = restaurantsRef.get().await()
-
-        for (document in snapshot.documents) {
-            if (document.id == restaurantId) {
-                val id = document.id
-                val name = document.get("name").toString()
-                val address = document.get("address").toString()
-                val openTime = document.get("openTime").toString()
-                val closeTime = document.get("closeTime").toString()
-                val contact = document.get("contact").toString()
-                val description = document.get("description").toString()
-                val imageName = document.get("imageName").toString()
-
-                return Restaurant(
-                    id,
-                    name,
-                    address,
-                    openTime,
-                    closeTime,
-                    contact,
-                    description,
-                    imageName
-                )
-            }
-        }
-
-        return Restaurant()
-    }
-
-    private fun setRecyclerView() {
-        binding.recyclerView.layoutManager = linearLayoutManager
-        Log.i("FavFrag2", favRestaurants.toString())
-        adapter = FavouriteRestaurantAdapter(favRestaurants, sharedViewModel)
-        binding.recyclerView.adapter = adapter
     }
 
     suspend fun removeFromFavourites(restaurant: Restaurant) {
@@ -146,6 +92,9 @@ class FavouritesFragment : Fragment(), CoroutineScope {
         favouritesRef.update(updates).await()
 
         Toast.makeText(context, "${restaurant.name} has been removed from your favorites.", Toast.LENGTH_SHORT).show()
+
+        val newFavRestaurants = (activity as MainActivity).getFavouriteRestaurants(uid)
+        sharedViewModel.setFavouriteRestaurants(newFavRestaurants)
     }
 
 }

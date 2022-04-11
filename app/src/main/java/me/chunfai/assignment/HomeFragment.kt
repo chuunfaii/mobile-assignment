@@ -1,7 +1,6 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,20 +8,16 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.*
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentHomeBinding
 import kotlin.coroutines.CoroutineContext
 
-class HomeFragment : Fragment(), CoroutineScope {
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -34,16 +29,6 @@ class HomeFragment : Fragment(), CoroutineScope {
     private lateinit var restaurants: MutableList<Restaurant>
 
     private lateinit var sharedViewModel: SharedViewModel
-
-    private var job: Job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,69 +61,16 @@ class HomeFragment : Fragment(), CoroutineScope {
                 .commit()
         }
 
-        return binding.root
-    }
+        sharedViewModel.restaurants.observe(viewLifecycleOwner) {
+            restaurants = it
 
+            adapter = RestaurantAdapter(restaurants, sharedViewModel)
 
-    override fun onResume() {
-        super.onResume()
-
-        restaurants.clear()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            restaurants = sharedViewModel.restaurants
-            setRecyclerView()
+            binding.recyclerView.layoutManager = linearLayoutManager
+            binding.recyclerView.adapter = adapter
         }
-    }
 
-//    private suspend fun getRestaurantDetails() {
-//        val restaurantRef = database.collection("restaurants")
-//        val snapshot = restaurantRef.get().await()
-//
-//        for (document in snapshot.documents) {
-//
-//            val restaurant = getRestaurant(document.id)
-//            Log.i("HomeFragment1",restaurant.toString())
-//            restaurants.add(restaurant)
-//
-//        }
-//    }
-
-//    private suspend fun getRestaurant(restaurantId: String): Restaurant {
-//        val restaurantRef = database.collection("restaurants")
-//        val snapshot = restaurantRef.get().await()
-//
-//        for (document in snapshot.documents) {
-//
-//            val id = document.id
-//            val name = document.get("name").toString()
-//            val address = document.get("address").toString()
-//            val openTime = document.get("openTime").toString()
-//            val closeTime = document.get("closeTime").toString()
-//            val contact = document.get("contact").toString()
-//            val description = document.get("description").toString()
-//            val imageName = document.get("imageName").toString()
-//
-//            return Restaurant(
-//                id,
-//                name,
-//                address,
-//                openTime,
-//                closeTime,
-//                contact,
-//                description,
-//                imageName
-//            )
-//
-//        }
-//
-//        return Restaurant()
-//    }
-
-    private fun setRecyclerView() {
-        binding.recyclerView.layoutManager = linearLayoutManager
-        adapter = RestaurantAdapter(restaurants, sharedViewModel)
-        binding.recyclerView.adapter = adapter
+        return binding.root
     }
 
 }

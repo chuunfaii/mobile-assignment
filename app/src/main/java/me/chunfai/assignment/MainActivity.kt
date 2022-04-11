@@ -1,12 +1,11 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,10 +45,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
-
-        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
         setSupportActionBar(binding.topAppBar)
 
@@ -93,10 +92,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         launch {
             val user = getUser(uid)
-            val restaurants = getAllRestaurants()
+            val favRestaurants = getFavouriteRestaurants(uid)
 
-            sharedViewModel.user = user
-            sharedViewModel.restaurants = restaurants
+            sharedViewModel.setUser(user)
+            sharedViewModel.setFavouriteRestaurants(favRestaurants)
         }
     }
 
@@ -112,37 +111,51 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         return User(firstName, lastName, email)
     }
 
-    suspend fun getAllRestaurants(): MutableList<Restaurant> {
+    suspend fun getFavouriteRestaurants(uid: String): MutableList<Restaurant> {
+        val favouritesRef = database.collection("favorites")
+        val snapshot = favouritesRef.get().await()
+
+        val favRestaurants = mutableListOf<Restaurant>()
+
+        for (document in snapshot.documents) {
+            if (document.getBoolean(uid) != null) {
+                val restaurant = getRestaurant(document.id)
+                favRestaurants.add(restaurant)
+            }
+        }
+
+        return favRestaurants
+    }
+
+    private suspend fun getRestaurant(restaurantId: String): Restaurant {
         val restaurantsRef = database.collection("restaurants")
         val snapshot = restaurantsRef.get().await()
 
-        val restaurants: MutableList<Restaurant> = mutableListOf()
-
         for (document in snapshot.documents) {
-            val id = document.id
-            val name = document.get("name").toString()
-            val address = document.get("address").toString()
-            val openTime = document.get("openTime").toString()
-            val closeTime = document.get("closeTime").toString()
-            val contact = document.get("contact").toString()
-            val description = document.get("description").toString()
-            val imageName = document.get("imageName").toString()
+            if (document.id == restaurantId) {
+                val id = document.id
+                val name = document.get("name").toString()
+                val address = document.get("address").toString()
+                val openTime = document.get("openTime").toString()
+                val closeTime = document.get("closeTime").toString()
+                val contact = document.get("contact").toString()
+                val description = document.get("description").toString()
+                val imageName = document.get("imageName").toString()
 
-            val restaurant = Restaurant(
-                id,
-                name,
-                address,
-                openTime,
-                closeTime,
-                contact,
-                description,
-                imageName
-            )
-
-            restaurants.add(restaurant)
+                return Restaurant(
+                    id,
+                    name,
+                    address,
+                    openTime,
+                    closeTime,
+                    contact,
+                    description,
+                    imageName
+                )
+            }
         }
 
-        return restaurants
+        return Restaurant()
     }
 
 }

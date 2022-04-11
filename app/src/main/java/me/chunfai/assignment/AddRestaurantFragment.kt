@@ -148,10 +148,8 @@ class AddRestaurantFragment : Fragment() {
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                sharedViewModel.resetData()
-
-                val restaurants = (activity as MainActivity).getAllRestaurants()
-                sharedViewModel.restaurants = restaurants
+//                val restaurants = (activity as MainActivity).getAllRestaurants()
+//                sharedViewModel.restaurants.value = restaurants
 
                 Toast.makeText(
                     context,

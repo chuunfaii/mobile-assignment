@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +28,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private var user: User? = User()
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +42,7 @@ class ProfileFragment : Fragment() {
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        user = sharedViewModel.user
+        user = User()
 
         val bottomNavigation =
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -55,12 +54,16 @@ class ProfileFragment : Fragment() {
         actionBar.setDisplayHomeAsUpEnabled(false)
         actionBar.title = "Foodie"
 
-        binding.editFirstName.editText?.setText(user?.firstName)
-        binding.editLastName.editText?.setText(user?.lastName)
-        binding.editEmail.editText?.setText(user?.email)
-
         binding.btnSave.setOnClickListener { updateProfile() }
         binding.btnLogout.setOnClickListener { logout() }
+
+        sharedViewModel.user.observe(viewLifecycleOwner) {
+            user = it
+
+            binding.editFirstName.editText?.setText(user.firstName)
+            binding.editLastName.editText?.setText(user.lastName)
+            binding.editEmail.editText?.setText(user.email)
+        }
 
         return binding.root
     }
@@ -150,7 +153,8 @@ class ProfileFragment : Fragment() {
                             Log.d("UserProfile", "User details updated on Firestore.")
 
                             // Update current user in SharedViewModel.
-                            sharedViewModel.user = User(firstName, lastName, email)
+                            val newUser = User(firstName, lastName, email)
+                            sharedViewModel.setUser(newUser)
 
                             requireActivity().supportFragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, ProfileFragment())

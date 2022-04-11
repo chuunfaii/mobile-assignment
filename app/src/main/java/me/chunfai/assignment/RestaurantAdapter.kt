@@ -67,7 +67,7 @@ class RestaurantAdapter(
             restaurantCard.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
 
-                sharedViewModel.selectedRestaurant = restaurant
+                sharedViewModel.setSelectedRestaurant(restaurant)
 
                 val activity = itemView.context as MainActivity
                 val fragment = itemView.findFragment<FavouritesFragment>()

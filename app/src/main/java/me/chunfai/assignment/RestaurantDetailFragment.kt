@@ -78,7 +78,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
         reviews = mutableListOf()
 
         //Get Restaurant Details
-        val restaurant = sharedViewModel.selectedRestaurant
+        val restaurant = sharedViewModel.selectedRestaurant.value
 
         val openTime = restaurant?.openTime
         val closeTime = restaurant?.closeTime
@@ -127,7 +127,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private fun store() {
         val uid = auth.currentUser!!.uid
-        val restaurant = sharedViewModel.selectedRestaurant
+        val restaurant = sharedViewModel.selectedRestaurant.value
         Log.d("Test",uid)
 
 
@@ -142,7 +142,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
     }
 
     private suspend fun getAllReview() {
-        val selectedRestaurant = sharedViewModel.selectedRestaurant
+        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
         val reviewRef = database.collection("reviews")
         val snapshot = reviewRef.get().await()
 
@@ -245,7 +245,7 @@ class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),C
 
     private suspend fun getAvgRating() {
         //Try to get all review ratingBar data
-        val selectedRestaurant = sharedViewModel.selectedRestaurant
+        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
         val allReview = database.collection("reviews")
         val snapshot = allReview.get().await()
         var reviewCount = 0
