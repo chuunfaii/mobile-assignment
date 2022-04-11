@@ -3,8 +3,10 @@ package me.chunfai.assignment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 import me.chunfai.assignment.databinding.ActivityAddReviewBinding
 
 class AddReview : AppCompatActivity() {
@@ -24,6 +26,7 @@ class AddReview : AppCompatActivity() {
     }
 
     private fun addReview() {
+
         val rating = binding.ratingBar.rating.toString()
         val review = binding.editReview.text.toString()
 

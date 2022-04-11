@@ -150,6 +150,7 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
     }
 
     private suspend fun getReviews() {
+
         val selectedRestaurant = sharedViewModel.selectedRestaurant.value
         val reviewRef = database.collection("reviews")
         val snapshot = reviewRef.get().await()
@@ -173,6 +174,8 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
                 )
 
                 reviews.add(review)
+
+
             }
         }
     }

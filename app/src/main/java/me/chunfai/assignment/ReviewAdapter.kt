@@ -82,6 +82,8 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             }
 
         private fun deleteReview() {
+            val activity = itemView.context as MainActivity
+
             database = FirebaseFirestore.getInstance()
 
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
@@ -91,6 +93,10 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 
             database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
                 Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
+
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
+                    .commit()
             }
 
         }
@@ -124,6 +130,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
         }
 
         private fun updateReview(){
+            val activity = itemView.context as MainActivity
             val editReview : TextInputLayout = itemView.findViewById(R.id.editReview)
             val displayReview : TextView = itemView.findViewById(R.id.textReview)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
@@ -152,6 +159,10 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             displayReview.visibility = View.VISIBLE
 
             Toast.makeText(itemView.context, "Your review has been updated", Toast.LENGTH_SHORT).show()
+
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
+                .commit()
         }
 
         private fun cancelReview(){
