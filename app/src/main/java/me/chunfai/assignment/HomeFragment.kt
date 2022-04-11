@@ -11,11 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import me.chunfai.assignment.databinding.FragmentHomeBinding
-import kotlin.coroutines.CoroutineContext
 
 class HomeFragment : Fragment() {
 
@@ -53,6 +49,17 @@ class HomeFragment : Fragment() {
         actionBar!!.setDisplayShowHomeEnabled(false)
         actionBar.setDisplayHomeAsUpEnabled(false)
         actionBar.title = "Foodie"
+
+        binding.restaurantSearch.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
 
         binding.floatingActionButton.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()

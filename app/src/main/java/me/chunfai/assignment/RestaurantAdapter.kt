@@ -1,62 +1,34 @@
 package me.chunfai.assignment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
+import me.chunfai.assignment.databinding.CardRestaurantBinding
 import java.io.File
+import java.util.*
 
 class RestaurantAdapter(
     private val restaurants: MutableList<Restaurant>,
-    private var sharedViewModel: SharedViewModel
+    private val sharedViewModel: SharedViewModel
 ) :
-    RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
+    RecyclerView.Adapter<RestaurantAdapter.ViewHolder>(), Filterable {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
-        return ViewHolder(itemView)
-    }
+    var restaurantsFilterList = mutableListOf<Restaurant>()
 
-    @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: RestaurantAdapter.ViewHolder, position: Int) {
-        val restaurant = restaurants[position]
-        val restaurantOpenHours = restaurant.openTime
-        val restaurantClosingHours = restaurant.closeTime
+    private lateinit var mContext: Context
 
-        val imageName = restaurant.imageName
-        val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
-        val localFile = File.createTempFile("TempImage", "jpg")
-        imageRef.getFile(localFile)
-            .addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                holder.restaurantImage.setImageBitmap(bitmap)
-            }
-            .addOnFailureListener {
-                Toast.makeText(
-                    holder.itemView.context,
-                    "Failed to retrieve the image",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        holder.restaurantName.text = restaurant.name
-        holder.restaurantHours.text = "$restaurantOpenHours - $restaurantClosingHours"
-        holder.restaurantDescription.text = restaurant.description
-    }
-
-    override fun getItemCount() = restaurants.size
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
         val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
         val restaurantName: TextView = itemView.findViewById(R.id.textRestaurantName)
@@ -65,7 +37,7 @@ class RestaurantAdapter(
 
         init {
             restaurantCard.setOnClickListener {
-                val restaurant = restaurants[adapterPosition]
+                val restaurant = restaurantsFilterList[adapterPosition]
 
                 sharedViewModel.setSelectedRestaurant(restaurant)
 
@@ -78,6 +50,78 @@ class RestaurantAdapter(
                         .addToBackStack(null)
                         .commit()
                 }
+            }
+        }
+    }
+
+    init {
+        restaurantsFilterList = restaurants
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
+        return ViewHolder(itemView)
+    }
+
+    override fun getItemCount(): Int {
+        return restaurantsFilterList.size
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: RestaurantAdapter.ViewHolder, position: Int) {
+        val restaurant = restaurantsFilterList[position]
+        val restaurantOpenTime = restaurant.openTime
+        val restaurantCloseTime = restaurant.closeTime
+
+        val imageName = restaurant.imageName
+        val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
+        val localFile = File.createTempFile("TempImage", "jpg")
+        imageRef.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                holder.restaurantImage.setImageBitmap(bitmap)
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    mContext,
+                    "Failed to retrieve a restaurant image.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        holder.restaurantName.text = restaurant.name
+        holder.restaurantHours.text =
+            "$restaurantOpenTime - $restaurantCloseTime"
+        holder.restaurantDescription.text = restaurant.description
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                restaurantsFilterList = if (charSearch.isEmpty()) {
+                    restaurants
+                } else {
+                    val resultList = mutableListOf<Restaurant>()
+                    for (row in restaurants) {
+                        if (row.name!!.lowercase(Locale.ROOT)
+                                .contains(charSearch.lowercase(Locale.ROOT))
+                        ) {
+                            resultList.add(row)
+                        }
+                    }
+                    resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = restaurantsFilterList
+                return filterResults
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                restaurantsFilterList = results?.values as MutableList<Restaurant>
+                notifyDataSetChanged()
             }
         }
     }
