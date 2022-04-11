@@ -27,7 +27,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
     private lateinit var database: FirebaseFirestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_review_adapter, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_review, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -51,10 +51,10 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val username: TextView = itemView.findViewById(R.id.username)
-        val rating: RatingBar = itemView.findViewById(R.id.ratingBar1)
-        val userReview: TextView = itemView.findViewById(R.id.user_review)
+        val rating: RatingBar = itemView.findViewById(R.id.ratingBar)
+        val userReview: TextView = itemView.findViewById(R.id.textReview)
 
-        val menuBtn:ImageView = itemView.findViewById(R.id.option_menu)
+        val menuBtn:ImageView = itemView.findViewById(R.id.optionMenu)
             init{
                 menuBtn.setOnClickListener{
                     val popupMenu = PopupMenu(itemView.context, menuBtn)
@@ -102,7 +102,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
 
         private fun editReview(){
             val editReview : TextInputLayout = itemView.findViewById(R.id.editReview)
-            val displayReview : TextView = itemView.findViewById(R.id.user_review)
+            val displayReview : TextView = itemView.findViewById(R.id.textReview)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
             val updateBtn : Button = itemView.findViewById(R.id.btnUpdate)
 
