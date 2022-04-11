@@ -1,7 +1,9 @@
 package me.chunfai.assignment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 import java.io.File
@@ -24,6 +27,7 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
         return ViewHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FavouriteRestaurantAdapter.ViewHolder, position: Int) {
         val restaurant = restaurants[position]
 
@@ -40,45 +44,50 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
             }
 
         holder.restaurantName.text = restaurant.name
+        val restaurantOpenHours = restaurant.openTime
+        val restaurantClosingHours = restaurant.closeTime
+        holder.restaurantHours.text = "$restaurantOpenHours - $restaurantClosingHours"
+        holder.restaurantDescription.text = restaurant.description
     }
 
     override fun getItemCount() = restaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val favoriteIcon: ImageView = itemView.findViewById(R.id.favoriteIcon)
-        val restaurantImage: ImageView = itemView.findViewById(R.id.restaurantImage)
-        val restaurantName: TextView = itemView.findViewById(R.id.restaurantName)
+        private val favouriteIcon: ImageView = itemView.findViewById(R.id.favouriteIcon)
+        private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
+        val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
+        val restaurantName: TextView = itemView.findViewById(R.id.textRestaurantName)
+        val restaurantHours: TextView = itemView.findViewById(R.id.textRestaurantHours)
+        val restaurantDescription: TextView = itemView.findViewById(R.id.textRestaurantDescription)
 
         init {
-            restaurantImage.setOnClickListener {
+            restaurantCard.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
 
                 sharedViewModel.selectedRestaurant = restaurant
 
                 val activity = itemView.context as MainActivity
-                val currentFragment = itemView.findFragment<FavouritesFragment>()
-                val newFragment = RestaurantDetailFragment()
+                val fragment = itemView.findFragment<FavouritesFragment>()
 
-                currentFragment.lifecycleScope.launch {
+                fragment.lifecycleScope.launch {
                     activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, newFragment)
+                        .replace(R.id.fragmentContainer, RestaurantDetailFragment())
                         .addToBackStack(null)
                         .commit()
                 }
             }
 
-            favoriteIcon.setOnClickListener {
+            favouriteIcon.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
 
                 val activity = itemView.context as MainActivity
-                val currentFragment = itemView.findFragment<FavouritesFragment>()
-                val newFragment = FavouritesFragment()
+                val fragment = itemView.findFragment<FavouritesFragment>()
 
-                currentFragment.lifecycleScope.launch {
-                    currentFragment.removeFromFavourites(restaurant)
+                fragment.lifecycleScope.launch {
+                    fragment.removeFromFavourites(restaurant)
 
                     activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, newFragment)
+                        .replace(R.id.fragmentContainer, FavouritesFragment())
                         .commit()
                 }
             }
