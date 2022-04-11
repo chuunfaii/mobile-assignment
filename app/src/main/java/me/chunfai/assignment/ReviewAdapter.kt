@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
@@ -22,9 +23,12 @@ import java.io.File
 class ReviewAdapter(private val reviews: MutableList<Review>, private val sharedViewModel: SharedViewModel) :
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>(){
 
+    private lateinit var database: FirebaseFirestore
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_review_adapter, parent, false)
         return ViewHolder(itemView)
+
 
     }
 
@@ -53,9 +57,9 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
         val menuBtn:ImageView = itemView.findViewById(R.id.option_menu)
             init{
                 menuBtn.setOnClickListener{
-                    val popupMenu: PopupMenu = PopupMenu(itemView.context, menuBtn)
+                    val popupMenu = PopupMenu(itemView.context, menuBtn)
                     popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
-                    popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                    popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.action_edit ->
                                 Toast.makeText(
@@ -63,30 +67,38 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
                                     "You Clicked : " + item.title,
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                //editReview()
-                                R.id.action_delete->
+                            //editReview()
+                            R.id.action_delete ->
                                 /*Toast.makeText(
                                     itemView.context,
-                                    "You Clicked : " + item.title,
+                                    "You have deleted your review",
                                     Toast.LENGTH_SHORT
                                 ).show()*/
                                 deleteReview()
                         }
                         true
-                })
+                    }
                     popupMenu.show()
                 }
 
             }
 
         private fun deleteReview() {
+            database = FirebaseFirestore.getInstance()
             //val reviewId = itemView.id.toString()
+            val restaurantId = sharedViewModel.selectedRestaurant.value?.id
+            val uid = FirebaseAuth.getInstance().currentUser!!.uid
             val selectedReview = sharedViewModel.selectedReview.value
-            val reviewId = selectedReview?.id.toString()
-            val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
-            reviewRef.delete().addOnSuccessListener {
-                Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
+            val reviewId = restaurantId + "_" + uid
+//            val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
+//            reviewRef.delete().addOnSuccessListener {
+//                Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
+//            }
+//            database.collection("reviews").document(reviewId).delete()
+            database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
+                Toast.makeText(itemView.context, "You have deleted your review", Toast.LENGTH_SHORT).show()
             }
+
         }
 
         /*private fun editReview(){
