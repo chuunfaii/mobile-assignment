@@ -34,8 +34,8 @@ class FavouriteRestaurantAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FavouriteRestaurantAdapter.ViewHolder, position: Int) {
         val restaurant = favRestaurants[position]
-        val restaurantOpenHours = restaurant.openTime
-        val restaurantClosingHours = restaurant.closeTime
+        val restaurantOpenTime = restaurant.openTime
+        val restaurantCloseTime = restaurant.closeTime
 
         val imageName = restaurant.imageName
         val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
@@ -54,15 +54,16 @@ class FavouriteRestaurantAdapter(
             }
 
         holder.restaurantName.text = restaurant.name
-        holder.restaurantHours.text = "$restaurantOpenHours - $restaurantClosingHours"
+        holder.restaurantHours.text = "$restaurantOpenTime - $restaurantCloseTime"
         holder.restaurantDescription.text = restaurant.description
     }
 
     override fun getItemCount() = favRestaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val favouriteIcon: ImageView = itemView.findViewById(R.id.favouriteIcon)
         private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
+        private val favouriteIcon: ImageView = itemView.findViewById(R.id.favouriteIcon)
+
         val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
         val restaurantName: TextView = itemView.findViewById(R.id.textRestaurantName)
         val restaurantHours: TextView = itemView.findViewById(R.id.textRestaurantHours)

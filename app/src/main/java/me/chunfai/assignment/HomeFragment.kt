@@ -17,26 +17,27 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
+    private lateinit var database: FirebaseFirestore
+
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RestaurantAdapter
 
-    private lateinit var database: FirebaseFirestore
+    private lateinit var sharedViewModel: SharedViewModel
 
     private lateinit var restaurants: MutableList<Restaurant>
 
-    private lateinit var sharedViewModel: SharedViewModel
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        database = FirebaseFirestore.getInstance()
+
         linearLayoutManager = LinearLayoutManager(requireContext())
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        database = FirebaseFirestore.getInstance()
 
         restaurants = mutableListOf()
 
@@ -50,7 +51,8 @@ class HomeFragment : Fragment() {
         actionBar.setDisplayHomeAsUpEnabled(false)
         actionBar.title = "Foodie"
 
-        binding.restaurantSearch.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        binding.restaurantSearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -70,14 +72,16 @@ class HomeFragment : Fragment() {
 
         sharedViewModel.restaurants.observe(viewLifecycleOwner) {
             restaurants = it
-
-            adapter = RestaurantAdapter(restaurants, sharedViewModel)
-
-            binding.recyclerView.layoutManager = linearLayoutManager
-            binding.recyclerView.adapter = adapter
+            setRecyclerView()
         }
 
         return binding.root
+    }
+
+    private fun setRecyclerView() {
+        adapter = RestaurantAdapter(restaurants, sharedViewModel)
+        binding.recyclerView.layoutManager = linearLayoutManager
+        binding.recyclerView.adapter = adapter
     }
 
 }

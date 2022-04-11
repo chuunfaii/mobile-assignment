@@ -15,9 +15,6 @@ class SharedViewModel : ViewModel() {
     private val _favouriteRestaurants = MutableLiveData<MutableList<Restaurant>>()
     private val _selectedRestaurant = MutableLiveData<Restaurant>()
 
-    private val _review = MutableLiveData<MutableList<Review>>()
-    private val _selectedReview = MutableLiveData<Review>()
-
     val user: LiveData<User>
         get() = _user
 
@@ -29,12 +26,6 @@ class SharedViewModel : ViewModel() {
 
     val selectedRestaurant: LiveData<Restaurant>
         get() = _selectedRestaurant
-
-    val review: LiveData<MutableList<Review>>
-        get() = _review
-
-    val selectedReview: LiveData<Review>
-        get() = _selectedReview
 
     init {
         viewModelScope.launch {
@@ -56,14 +47,6 @@ class SharedViewModel : ViewModel() {
 
     suspend fun resetRestaurants() {
         _restaurants.value = getAllRestaurants()
-    }
-
-    fun setReview(newReview: MutableList<Review>){
-        _review.value = newReview
-    }
-
-    fun setSelectedReview(newSelectedReview: Review){
-        _selectedReview.value = newSelectedReview
     }
 
     private suspend fun getAllRestaurants(): MutableList<Restaurant> {

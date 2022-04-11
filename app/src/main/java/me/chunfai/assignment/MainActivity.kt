@@ -1,7 +1,6 @@
 package me.chunfai.assignment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -27,10 +26,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private val favouritesFragment = FavouritesFragment()
-    private val homeFragment = HomeFragment()
-    private val profileFragment = ProfileFragment()
-
     private var job: Job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -43,24 +38,25 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+
         setSupportActionBar(binding.topAppBar)
 
-        replaceFragment(homeFragment)
+        replaceFragment(HomeFragment())
 
         binding.bottomNavigation.selectedItemId = R.id.homeItem
 
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.favouritesItem -> replaceFragment(favouritesFragment)
-                R.id.homeItem -> replaceFragment(homeFragment)
-                R.id.profileItem -> replaceFragment(profileFragment)
+                R.id.favouritesItem -> replaceFragment(FavouritesFragment())
+                R.id.homeItem -> replaceFragment(HomeFragment())
+                R.id.profileItem -> replaceFragment(ProfileFragment())
             }
             true
         }

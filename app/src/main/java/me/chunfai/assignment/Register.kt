@@ -47,7 +47,11 @@ class Register : AppCompatActivity() {
         }
 
         if (password != passwordConfirmation) {
-            Toast.makeText(this, "Password and password confirmation do not match.", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Password and password confirmation do not match.",
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
 
@@ -57,14 +61,21 @@ class Register : AppCompatActivity() {
 
                 writeUser(uid, firstName, lastName, email)
 
-                Toast.makeText(this, "Account has been registered successfully.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Account has been registered successfully.",
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 val intent = Intent(this, Login::class.java)
                 startActivity(intent)
-
                 finish()
             } else {
-                Toast.makeText(this, "This email already exists. Please try another email.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "This email already exists. Please try another email.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

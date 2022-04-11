@@ -37,10 +37,10 @@ class ProfileFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
+
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         user = User()
 

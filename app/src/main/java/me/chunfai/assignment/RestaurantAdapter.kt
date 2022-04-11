@@ -3,7 +3,6 @@ package me.chunfai.assignment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
-import me.chunfai.assignment.databinding.CardRestaurantBinding
 import java.io.File
 import java.util.*
 
@@ -28,7 +26,7 @@ class RestaurantAdapter(
 
     private lateinit var mContext: Context
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
         val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
         val restaurantName: TextView = itemView.findViewById(R.id.textRestaurantName)
@@ -58,8 +56,12 @@ class RestaurantAdapter(
         restaurantsFilterList = restaurants
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RestaurantAdapter.ViewHolder {
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
         return ViewHolder(itemView)
     }
 

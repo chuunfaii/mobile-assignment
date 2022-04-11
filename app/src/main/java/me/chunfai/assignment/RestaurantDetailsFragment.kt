@@ -98,6 +98,13 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             Toast.makeText(context, "Failed to retrieve the image", Toast.LENGTH_SHORT).show()
         }
 
+        val favouriteRestaurants = sharedViewModel.favouriteRestaurants.value
+        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
+
+        if (favouriteRestaurants!!.contains(selectedRestaurant)) {
+            binding.favouriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
+
         binding.textRestaurantName.text = restaurant?.name
         binding.textRestaurantAddress.text = restaurant?.address
         binding.textRestaurantContact.text = "Contact No.: " + restaurant?.contact
@@ -127,6 +134,18 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
     }
 
     private suspend fun addToFavourites() {
+        val favouriteRestaurants = sharedViewModel.favouriteRestaurants.value
+        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
+
+        if (favouriteRestaurants!!.contains(selectedRestaurant)) {
+            Toast.makeText(
+                context,
+                "You have already favourite this restaurant.",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val restaurant = sharedViewModel.selectedRestaurant.value!!
         val restaurantId = restaurant.id
@@ -147,6 +166,10 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
 
         val newFavRestaurants = (activity as MainActivity).getFavouriteRestaurants(uid)
         sharedViewModel.setFavouriteRestaurants(newFavRestaurants)
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
+            .commit()
     }
 
     private suspend fun getReviews() {
@@ -174,8 +197,6 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
                 )
 
                 reviews.add(review)
-
-
             }
         }
     }
@@ -218,5 +239,5 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = adapter
     }
-}
 
+}

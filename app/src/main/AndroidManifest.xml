@@ -40,29 +40,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
-        <activity
-            android:name=".TestAllRestaurants"
-            android:exported="false" />
-        <activity
-            android:name=".Search"
-            android:exported="false" />
-        <activity
-            android:name=".Homepage"
-            android:exported="false" />
-        <activity
-            android:name=".AddReview"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantDetails"
-            android:exported="false" />
-        <activity
-            android:name=".Favourites"
-            android:exported="false" />
-        <activity
-            android:name=".UserProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

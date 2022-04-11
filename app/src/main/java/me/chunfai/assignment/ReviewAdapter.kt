@@ -46,8 +46,6 @@ class ReviewAdapter(
         private val updateBtn: Button = itemView.findViewById(R.id.btnUpdate)
         private val cancelBtn: Button = itemView.findViewById(R.id.btnCancel)
 
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-
         val userName: TextView = itemView.findViewById(R.id.userName)
         val rating: RatingBar = itemView.findViewById(R.id.ratingBar)
         val userReview: TextView = itemView.findViewById(R.id.textReview)
@@ -156,8 +154,6 @@ class ReviewAdapter(
             updateBtn.visibility = View.GONE
             displayReview.visibility = View.VISIBLE
         }
-
     }
-
 
 }

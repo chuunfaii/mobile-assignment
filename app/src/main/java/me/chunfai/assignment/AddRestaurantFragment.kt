@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,6 +29,7 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class AddRestaurantFragment : Fragment() {
 
     private lateinit var binding: FragmentAddRestaurantBinding
@@ -41,7 +42,8 @@ class AddRestaurantFragment : Fragment() {
     private lateinit var imageByteArray: ByteArray
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -62,7 +64,7 @@ class AddRestaurantFragment : Fragment() {
         actionBar.title = "Add New Restaurant"
 
         binding.btnCancel.setOnClickListener {
-            (activity as MainActivity).supportFragmentManager.popBackStackImmediate()
+            requireActivity().supportFragmentManager.popBackStack()
         }
         binding.btnSelect.setOnClickListener { selectImage() }
         binding.btnCamera.setOnClickListener { openCamera() }
@@ -114,6 +116,7 @@ class AddRestaurantFragment : Fragment() {
         }
 
     private fun addRestaurant() {
+        val restaurantImage = binding.imageView
         val restaurantName = binding.editRestaurantName.editText?.text.toString()
         val restaurantAddress = binding.editRestaurantAddress.editText?.text.toString()
         val restaurantContact = binding.editRestaurantContact.editText?.text.toString()
@@ -125,38 +128,45 @@ class AddRestaurantFragment : Fragment() {
         val now = Date()
         val fileName = formatter.format(now)
 
+        if (restaurantImage.drawable == null) {
+            Toast.makeText(context, "Please upload an image.", Toast.LENGTH_LONG).show()
+            return
+        }
+
         if (restaurantName.isBlank() || restaurantAddress.isBlank() || restaurantContact.isBlank() || restaurantTimeOpen.isBlank() || restaurantTimeClose.isBlank() || restaurantDescription.isBlank()) {
-            Toast.makeText(context, "All fields are required to input.", Toast.LENGTH_LONG).show()
-        } else {
-            val restaurant = hashMapOf(
-                "name" to restaurantName,
-                "address" to restaurantAddress,
-                "openTime" to restaurantTimeOpen,
-                "closeTime" to restaurantTimeClose,
-                "contact" to restaurantContact,
-                "description" to restaurantDescription,
-                "imageName" to fileName
-            )
-            database.collection("restaurants").add(restaurant)
+            Toast.makeText(context, "All fields are required.", Toast.LENGTH_LONG).show()
+            return
+        }
 
-            val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+        val restaurant = hashMapOf(
+            "name" to restaurantName,
+            "address" to restaurantAddress,
+            "openTime" to restaurantTimeOpen,
+            "closeTime" to restaurantTimeClose,
+            "contact" to restaurantContact,
+            "description" to restaurantDescription,
+            "imageName" to fileName
+        )
+        database.collection("restaurants").add(restaurant)
 
-            try {
-                storageReference.putFile(imageUri)
-            } catch (exception: Exception) {
-                storageReference.putBytes(imageByteArray)
-            }
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
 
-            viewLifecycleOwner.lifecycleScope.launch {
-//                val restaurants = (activity as MainActivity).getAllRestaurants()
-//                sharedViewModel.restaurants.value = restaurants
+        try {
+            storageReference.putFile(imageUri)
+        } catch (exception: Exception) {
+            storageReference.putBytes(imageByteArray)
+        }
 
-                Toast.makeText(
-                    context,
-                    "New restaurant has been added successfully.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.resetRestaurants()
+
+            Toast.makeText(
+                context,
+                "New restaurant has been added successfully.",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
