@@ -28,7 +28,7 @@
     <string name="reviews"><b>Reviews</b></string>
     <string name="name">John Berg</string>
     <string name="description">Great restaurant !! I recommend all of you go to try it and taste it out !! It is the best restaurant I\'ve ever seen!</string>
-    <string name="edit_review">Edit</string>
+    <string name="edit">Edit</string>
     <string name="delete_review">Delete</string>
     <string name="review_menu" />
     <string name="enter_you_review">Enter you review</string>
@@ -47,8 +47,9 @@
     <string name="restaurant_address">Restaurant Address</string>
     <string name="restaurant_contact_no">Restaurant Contact No.</string>
     <string name="restaurant_description">Restaurant Description</string>
-    <string name="cancel">Cancel</string>
     <string name="welcome_back">Welcome back! 👋</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="edit_review">Edit Review</string>
 </resources>
