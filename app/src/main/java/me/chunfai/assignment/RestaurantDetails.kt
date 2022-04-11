@@ -3,8 +3,6 @@ package me.chunfai.assignment
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +22,7 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 
-class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
+class RestaurantDetails : AppCompatActivity() ,CoroutineScope{
 
     private lateinit var binding: ActivityRestaurantDetailBinding
     private lateinit var bindingReview: ActivityReviewAdapterBinding
@@ -107,14 +105,14 @@ class Restaurant_detail : AppCompatActivity() ,CoroutineScope{
                 when (item.itemId) {
                     R.id.action_edit ->
                         Toast.makeText(
-                            this@Restaurant_detail,
+                            this@RestaurantDetails,
                             "You Clicked : " + item.title,
                             Toast.LENGTH_SHORT
                         ).show()
 //                        editReview()
                     R.id.action_delete ->
                         Toast.makeText(
-                            this@Restaurant_detail,
+                            this@RestaurantDetails,
                             "You Clicked : " + item.title,
                             Toast.LENGTH_SHORT
                         ).show()

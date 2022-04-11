@@ -36,7 +36,7 @@ import me.chunfai.assignment.databinding.ActivityReviewAdapterBinding
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
-class RestaurantDetailFragment : Fragment(R.layout.fragment_restaurant_detail),CoroutineScope {
+class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),CoroutineScope {
 
     private lateinit var binding: FragmentRestaurantDetailBinding
 

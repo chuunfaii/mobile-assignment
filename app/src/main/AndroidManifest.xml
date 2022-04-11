@@ -55,7 +55,7 @@
             android:name=".AddReview"
             android:exported="false" />
         <activity
-            android:name=".Restaurant_detail"
+            android:name=".RestaurantDetails"
             android:exported="false" />
         <activity
             android:name=".Favourites"

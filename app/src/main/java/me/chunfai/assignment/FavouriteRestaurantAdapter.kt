@@ -79,7 +79,7 @@ class FavouriteRestaurantAdapter(
 
                 fragment.lifecycleScope.launch {
                     activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, RestaurantDetailFragment())
+                        .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
                         .addToBackStack(null)
                         .commit()
                 }
