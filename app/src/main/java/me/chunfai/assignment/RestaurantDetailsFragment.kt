@@ -1,5 +1,6 @@
 package me.chunfai.assignment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,22 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.telecom.Call
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.api.Distribution
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
@@ -30,15 +25,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import me.chunfai.assignment.databinding.ActivityRestaurantDetailBinding
-import me.chunfai.assignment.databinding.FragmentRestaurantDetailBinding
-import me.chunfai.assignment.databinding.ActivityReviewAdapterBinding
+import me.chunfai.assignment.databinding.FragmentRestaurantDetailsBinding
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
-class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),CoroutineScope {
+class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details), CoroutineScope {
 
-    private lateinit var binding: FragmentRestaurantDetailBinding
+    private lateinit var binding: FragmentRestaurantDetailsBinding
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
@@ -46,7 +39,6 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerView.Adapter<ReviewAdapter.ViewHolder>
 
-    private lateinit var users: MutableList<User>
     private lateinit var reviews: MutableList<Review>
 
     private lateinit var sharedViewModel: SharedViewModel
@@ -61,11 +53,17 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
         job.cancel()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_restaurant_detail, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_restaurant_details,
+            container,
+            false
+        )
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
@@ -74,37 +72,54 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
         auth = Firebase.auth
         database = FirebaseFirestore.getInstance()
 
-        users = mutableListOf()
         reviews = mutableListOf()
 
-        //Get Restaurant Details
-        val restaurant = sharedViewModel.selectedRestaurant.value
+        val bottomNavigation =
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        val openTime = restaurant?.openTime
-        val closeTime = restaurant?.closeTime
+        bottomNavigation.visibility = View.GONE
+
+        val restaurant = sharedViewModel.selectedRestaurant.value
+        val restaurantOpenTime = restaurant?.openTime
+        val restaurantClosingTime = restaurant?.closeTime
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = restaurant?.name
 
         val imageName = restaurant?.imageName
         val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
-        val localfile = File.createTempFile("TempImage", "jpg")
-        imageRef.getFile(localfile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
-            binding.restaurantImage.setImageBitmap(bitmap)
+        val localFile = File.createTempFile("TempImage", "jpg")
+        imageRef.getFile(localFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+            binding.imageRestaurant.setImageBitmap(bitmap)
         }.addOnFailureListener {
             Toast.makeText(context, "Failed to retrieve the image", Toast.LENGTH_SHORT).show()
-
         }
 
-        binding.restaurantTitle.text = restaurant?.name
-        binding.restaurantAddress.text = restaurant?.address
-        binding.restaurantContact.text = "Contact Number : " + restaurant?.contact
-        binding.restaurantBusinessHour.text = "Business Hour : $openTime - $closeTime"
+        binding.textRestaurantName.text = restaurant?.name
+        binding.textRestaurantAddress.text = restaurant?.address
+        binding.textRestaurantContact.text = "Contact No.: " + restaurant?.contact
+        binding.textRestaurantBusinessHours.text =
+            "Business Hours: $restaurantOpenTime - $restaurantClosingTime"
 
-        binding.icFavorite.setOnClickListener { store() }
+        binding.favouriteIcon.setOnClickListener {
+            launch {
+                addToFavourites()
+            }
+        }
 
         binding.review.setOnClickListener {
             val intent = Intent(context, AddReview::class.java)
             intent.putExtra("restaurantId", restaurant?.id)
             startActivity(intent)
+        }
+
+        launch {
+            getReviews()
+            setAverageRating()
+            setRecyclerView()
         }
 
 //    bindingReview.btnUpdate.setOnClickListener{
@@ -114,40 +129,36 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    private suspend fun addToFavourites() {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val restaurant = sharedViewModel.selectedRestaurant.value!!
+        val restaurantId = restaurant.id
 
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            getAllReview()
-            getAvgRating()
-            setRecyclerView()
-        }
-    }
-
-    private fun store() {
-        val uid = auth.currentUser!!.uid
-        val restaurant = sharedViewModel.selectedRestaurant.value
-        Log.d("Test",uid)
-
-
-        val resId = restaurant?.id
-        val favHaspMap = hashMapOf(
-            "$uid" to true,
+        val favouritesHashMap = hashMapOf(
+            uid to true,
         )
-        if (resId != null) {
-            database.collection("favorites").document(resId).set(favHaspMap, SetOptions.merge())
+
+        if (restaurantId != null) {
+            database.collection("favorites").document(restaurantId).set(favouritesHashMap)
         }
-        Toast.makeText(context, "Added to Favorite", Toast.LENGTH_LONG).show()
+
+        Toast.makeText(
+            context,
+            "${restaurant.name} has been added to your favourites.",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        val newFavRestaurants = (activity as MainActivity).getFavouriteRestaurants(uid)
+        sharedViewModel.setFavouriteRestaurants(newFavRestaurants)
     }
 
-    private suspend fun getAllReview() {
+    private suspend fun getReviews() {
         val selectedRestaurant = sharedViewModel.selectedRestaurant.value
         val reviewRef = database.collection("reviews")
         val snapshot = reviewRef.get().await()
 
         for (document in snapshot.documents) {
-            if(document.get("restaurantId")== selectedRestaurant?.id) {
+            if (document.get("restaurantId") == selectedRestaurant?.id) {
                 val id = document.id
                 val rating = document.get("rating").toString()
                 val restaurantId = document.get("restaurantId").toString()
@@ -166,10 +177,9 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
 
                 reviews.add(review)
             }
-
         }
-
     }
+
 //    private fun editReview(){
 //        val editReview = findViewById<EditText>(R.id.editReview)
 //        val displayReview = findViewById<TextView>(R.id.user_review)
@@ -243,29 +253,30 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_detail),
         return User(firstName, lastName, email)
     }
 
-    private suspend fun getAvgRating() {
-        //Try to get all review ratingBar data
+    private suspend fun setAverageRating() {
         val selectedRestaurant = sharedViewModel.selectedRestaurant.value
-        val allReview = database.collection("reviews")
-        val snapshot = allReview.get().await()
+        val allReviews = database.collection("reviews")
+        val snapshot = allReviews.get().await()
+
         var reviewCount = 0
         var totalRating = 0f
 
         for (document in snapshot.documents) {
-            if(document.get("restaurantId")== selectedRestaurant?.id) {
+            if (document.get("restaurantId") == selectedRestaurant?.id) {
                 val rating = document.get("rating").toString()
                 reviewCount += 1
                 totalRating += rating.toFloat()
             }
         }
-        var avgRating = totalRating / reviewCount
 
-        binding.ratingBar.rating = avgRating
+        val averageRating = totalRating / reviewCount
+
+        binding.ratingBar.rating = averageRating
     }
 
     private fun setRecyclerView() {
-        binding.recyclerView.layoutManager = linearLayoutManager
         adapter = ReviewAdapter(reviews)
+        binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = adapter
     }
 }

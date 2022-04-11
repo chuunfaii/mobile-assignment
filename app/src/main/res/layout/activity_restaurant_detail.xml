@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantDetails"
     android:orientation="vertical"
     >
     <LinearLayout
@@ -96,7 +95,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/review"
+            android:text="@string/reviews"
             android:textSize="25sp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="35dp"
@@ -120,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="120dp"
             android:scrollbars="vertical"
-            tools:listitem="@layout/activity_review_adapter"/>
+            tools:listitem="@layout/item_review"/>
 
     </LinearLayout>
 

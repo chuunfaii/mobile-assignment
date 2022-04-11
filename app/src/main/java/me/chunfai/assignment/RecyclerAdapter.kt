@@ -31,7 +31,7 @@ class RecyclerAdapter(private val restaurants: MutableList<Restaurant>) :
                 val restaurant = restaurants[adapterPosition]
                 val context = itemView.context
 
-                val intent = Intent(context, RestaurantDetails::class.java)
+                val intent = Intent(context, RestaurantDetailsFragment::class.java)
                 intent.putExtra("restaurant", restaurant)
                 context.startActivity(intent)
             }

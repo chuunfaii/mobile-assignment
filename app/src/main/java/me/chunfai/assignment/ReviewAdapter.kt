@@ -1,23 +1,16 @@
 package me.chunfai.assignment
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.launch
-import java.io.File
 
 class ReviewAdapter(private val reviews: MutableList<Review>) :
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_review_adapter, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_review, parent, false)
         return ViewHolder(itemView)
 
     }
@@ -40,10 +33,10 @@ class ReviewAdapter(private val reviews: MutableList<Review>) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val username: TextView = itemView.findViewById(R.id.username)
-    val rating: RatingBar = itemView.findViewById(R.id.ratingBar1)
-    val userReview: TextView = itemView.findViewById(R.id.user_review)
+    val rating: RatingBar = itemView.findViewById(R.id.ratingBar)
+    val userReview: TextView = itemView.findViewById(R.id.textReview)
 
-    val menuBtn:ImageView = itemView.findViewById(R.id.option_menu)
+    val menuBtn:ImageView = itemView.findViewById(R.id.optionMenu)
         init{
             menuBtn.setOnClickListener{
                 val popupMenu: PopupMenu = PopupMenu(itemView.context, menuBtn)

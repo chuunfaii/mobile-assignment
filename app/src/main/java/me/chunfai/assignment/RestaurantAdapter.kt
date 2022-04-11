@@ -70,7 +70,7 @@ class RestaurantAdapter(
                 sharedViewModel.setSelectedRestaurant(restaurant)
 
                 val activity = itemView.context as MainActivity
-                val fragment = itemView.findFragment<FavouritesFragment>()
+                val fragment = itemView.findFragment<HomeFragment>()
 
                 fragment.lifecycleScope.launch {
                     activity.supportFragmentManager.beginTransaction()
