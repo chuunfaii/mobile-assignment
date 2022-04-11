@@ -29,16 +29,12 @@ class SharedViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _restaurants.value = getAllRestaurants()
+            resetRestaurants()
         }
     }
 
     fun setUser(newUser: User) {
         _user.value = newUser
-    }
-
-    fun setRestaurants(newRestaurants: MutableList<Restaurant>) {
-        _restaurants.value = newRestaurants
     }
 
     fun setFavouriteRestaurants(newFavouriteRestaurants: MutableList<Restaurant>) {
@@ -47,6 +43,10 @@ class SharedViewModel : ViewModel() {
 
     fun setSelectedRestaurant(newSelectedRestaurant: Restaurant) {
         _selectedRestaurant.value = newSelectedRestaurant
+    }
+
+    suspend fun resetRestaurants() {
+        _restaurants.value = getAllRestaurants()
     }
 
     private suspend fun getAllRestaurants(): MutableList<Restaurant> {
