@@ -1,24 +1,13 @@
 package me.chunfai.assignment
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.launch
-import java.io.File
 
 class ReviewAdapter(private val reviews: MutableList<Review>, private val sharedViewModel: SharedViewModel) :
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>(){
@@ -33,6 +22,8 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
     override fun onBindViewHolder(holder: ReviewAdapter.ViewHolder, position: Int) {
         val review = reviews[position]
 
+//        sharedViewModel.setSelectedReview(review)
+
         val rating1 = review.rating
         val userReview = review.review
         val username = review.username
@@ -41,17 +32,25 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
         holder.userReview.text = userReview
         holder.rating.rating = rating1!!.toFloat()
 
-
     }
 
     override fun getItemCount() = reviews.size
 
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, review: Review) : RecyclerView.ViewHolder(itemView) {
 
         val username: TextView = itemView.findViewById(R.id.username)
         val rating: RatingBar = itemView.findViewById(R.id.ratingBar)
         val userReview: TextView = itemView.findViewById(R.id.textReview)
+        var uid = FirebaseAuth.getInstance().currentUser!!.uid
+
+        internal fun bind(position: Int){
+            username.text = reviews[position].username
+            rating.rating = reviews[position].rating?.toFloat()!!
+            userReview.text = reviews[position].review
+            uid = reviews[position].userId.toString()
+
+        }
 
         val menuBtn:ImageView = itemView.findViewById(R.id.optionMenu)
             init{
@@ -68,6 +67,7 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
                         true
                     }
                     popupMenu.show()
+
                 }
 
                 val updateBtn: Button = itemView.findViewById(R.id.btnUpdate)
@@ -85,19 +85,31 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             val activity = itemView.context as MainActivity
 
             database = FirebaseFirestore.getInstance()
-
+//            val userId = sharedViewModel.selectedReview.value?.userId
+//            Log.d("UserId",sharedViewModel.selectedReview.value?.userId.toString())
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
-            val selectedReview = sharedViewModel.selectedReview.value
             val reviewId = restaurantId + "_" + uid
 
-            database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
-                Toast.makeText(itemView.context, "Your review has been removed", Toast.LENGTH_SHORT).show()
+//            if(uid == userId) {
+                database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
+                    Toast.makeText(
+                        itemView.context,
+                        "Your review has been removed",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
-                    .commit()
-            }
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
+                        .commit()
+                }
+//            }else{
+//                Toast.makeText(
+//                    itemView.context,
+//                    "You cannot delete other review.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
 
         }
 
@@ -106,26 +118,30 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             val displayReview : TextView = itemView.findViewById(R.id.textReview)
             val cancelBtn : Button = itemView.findViewById(R.id.btnCancel)
             val updateBtn : Button = itemView.findViewById(R.id.btnUpdate)
-
-            editReview.visibility = View.VISIBLE
-            cancelBtn.visibility = View.VISIBLE
-            updateBtn.visibility = View.VISIBLE
-            displayReview.visibility = View.GONE
-
-
-            database = FirebaseFirestore.getInstance()
-
-            val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
+//            val userId = sharedViewModel.selectedReview.value?.userId
+            val restaurantId = sharedViewModel.selectedRestaurant.value?.id
 
             val reviewId = restaurantId + "_" + uid
 
-            val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
-            reviewRef.get().addOnSuccessListener {
-                val comment: String = it.getString("review").toString()
-                displayReview.text = comment
-            }
-            editReview.requestFocus()
+//            if(uid==userId){
+                editReview.visibility = View.VISIBLE
+                cancelBtn.visibility = View.VISIBLE
+                updateBtn.visibility = View.VISIBLE
+                displayReview.visibility = View.GONE
+
+                database = FirebaseFirestore.getInstance()
+
+                val reviewRef = FirebaseFirestore.getInstance().collection("reviews").document(reviewId)
+                reviewRef.get().addOnSuccessListener {
+                    val comment: String = it.getString("review").toString()
+                    displayReview.text = comment
+                }
+                editReview.requestFocus()
+//            }else{
+//                Toast.makeText(itemView.context, "You cannot edit other review", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
 
         }
 
@@ -143,26 +159,30 @@ class ReviewAdapter(private val reviews: MutableList<Review>, private val shared
             val restaurantId = sharedViewModel.selectedRestaurant.value?.id
             val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
+
             val reviewId = restaurantId + "_" + uid
 
             val revRef = database.collection("reviews").document(reviewId)
 
-            val updates = hashMapOf<String, Any>(
-                "review" to reviewText
-            )
 
-            revRef.update(updates)
+                val updates = hashMapOf<String, Any>(
+                    "review" to reviewText
+                )
 
-            editReview.visibility = View.GONE
-            cancelBtn.visibility = View.GONE
-            updateBtn.visibility = View.GONE
-            displayReview.visibility = View.VISIBLE
+                revRef.update(updates)
 
-            Toast.makeText(itemView.context, "Your review has been updated", Toast.LENGTH_SHORT).show()
+                editReview.visibility = View.GONE
+                cancelBtn.visibility = View.GONE
+                updateBtn.visibility = View.GONE
+                displayReview.visibility = View.VISIBLE
 
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
-                .commit()
+                Toast.makeText(itemView.context, "Your review has been updated", Toast.LENGTH_SHORT)
+                    .show()
+
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, RestaurantDetailsFragment())
+                    .commit()
+
         }
 
         private fun cancelReview(){

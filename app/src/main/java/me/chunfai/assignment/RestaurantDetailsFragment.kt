@@ -122,10 +122,6 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             setRecyclerView()
         }
 
-//    bindingReview.btnUpdate.setOnClickListener{
-//        updateReview()
-//    }
-
         return binding.root
     }
 
