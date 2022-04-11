@@ -1,9 +1,7 @@
 package me.chunfai.assignment
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +16,18 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 import java.io.File
 
-
-class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant>, private var sharedViewModel: SharedViewModel) :
+class FavouriteRestaurantAdapter(
+    private val restaurants: MutableList<Restaurant>,
+    private var sharedViewModel: SharedViewModel
+) :
     RecyclerView.Adapter<FavouriteRestaurantAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteRestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_favourite_restaurant, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FavouriteRestaurantAdapter.ViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_favourite_restaurant, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -40,7 +44,11 @@ class FavouriteRestaurantAdapter(private val restaurants: MutableList<Restaurant
                 holder.restaurantImage.setImageBitmap(bitmap)
             }
             .addOnFailureListener {
-                Toast.makeText(holder.itemView.context, "Failed to retrieve the image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Failed to retrieve the image",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         holder.restaurantName.text = restaurant.name

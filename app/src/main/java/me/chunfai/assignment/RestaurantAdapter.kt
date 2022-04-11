@@ -1,7 +1,6 @@
 package me.chunfai.assignment
 
-import android.app.Activity
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +11,27 @@ import android.widget.Toast
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.launch
 import java.io.File
 
-
-class RestaurantAdapter(private val restaurants: MutableList<Restaurant>, private var sharedViewModel: SharedViewModel) :
+class RestaurantAdapter(
+    private val restaurants: MutableList<Restaurant>,
+    private var sharedViewModel: SharedViewModel
+) :
     RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_homepage_cardview, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
         return ViewHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RestaurantAdapter.ViewHolder, position: Int) {
         val restaurant = restaurants[position]
+        val restaurantOpenHours = restaurant.openTime
+        val restaurantClosingHours = restaurant.closeTime
 
         val imageName = restaurant.imageName
         val imageRef = FirebaseStorage.getInstance().reference.child("images/$imageName")
@@ -37,49 +42,43 @@ class RestaurantAdapter(private val restaurants: MutableList<Restaurant>, privat
                 holder.restaurantImage.setImageBitmap(bitmap)
             }
             .addOnFailureListener {
-                Toast.makeText(holder.itemView.context, "Failed to retrieve the image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Failed to retrieve the image",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         holder.restaurantName.text = restaurant.name
+        holder.restaurantHours.text = "$restaurantOpenHours - $restaurantClosingHours"
+        holder.restaurantDescription.text = restaurant.description
     }
 
     override fun getItemCount() = restaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val favoriteIcon: ImageView = itemView.findViewById(R.id.favoriteIcon)
-        val restaurantImage: ImageView = itemView.findViewById(R.id.restaurantImage)
-        val restaurantName: TextView = itemView.findViewById(R.id.restaurantName)
+        private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
+        val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
+        val restaurantName: TextView = itemView.findViewById(R.id.textRestaurantName)
+        val restaurantHours: TextView = itemView.findViewById(R.id.textRestaurantHours)
+        val restaurantDescription: TextView = itemView.findViewById(R.id.textRestaurantDescription)
 
         init {
-            restaurantImage.setOnClickListener {
+            restaurantCard.setOnClickListener {
                 val restaurant = restaurants[adapterPosition]
 
                 sharedViewModel.selectedRestaurant = restaurant
 
                 val activity = itemView.context as MainActivity
-                val currentFragment = itemView.findFragment<HomeFragment>()
-                val newFragment = RestaurantDetailFragment()
+                val fragment = itemView.findFragment<FavouritesFragment>()
 
-                currentFragment.lifecycleScope.launch {
+                fragment.lifecycleScope.launch {
                     activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, newFragment)
+                        .replace(R.id.fragmentContainer, RestaurantDetailFragment())
                         .addToBackStack(null)
                         .commit()
                 }
             }
-
-//            favoriteIcon.setOnClickListener {
-//                val restaurant = restaurants[adapterPosition]
-//                val context = itemView.context
-//
-//                (context as Favourites).launch {
-//                    context.removeFromFavourites(restaurant)
-//                }
-//
-//                val intent = Intent(context, Favourites::class.java)
-//                context.startActivity(intent)
-//                (context as Activity).finish()
-//            }
         }
     }
 
