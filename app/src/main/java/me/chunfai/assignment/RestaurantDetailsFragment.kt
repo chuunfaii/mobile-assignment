@@ -1,7 +1,6 @@
 package me.chunfai.assignment
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,16 +53,8 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_restaurant_details,
-            container,
-            false
-        )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_restaurant_details, container,false)
 
         linearLayoutManager = LinearLayoutManager(requireContext())
 
@@ -138,11 +129,8 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
         val selectedRestaurant = sharedViewModel.selectedRestaurant.value
 
         if (favouriteRestaurants!!.contains(selectedRestaurant)) {
-            Toast.makeText(
-                context,
-                "You have already favourite this restaurant.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, "You have already favourite this restaurant.", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -158,11 +146,8 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             database.collection("favorites").document(restaurantId).set(favouritesHashMap)
         }
 
-        Toast.makeText(
-            context,
-            "${restaurant.name} has been added to your favourites.",
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(context, "${restaurant.name} has been added to your favourites.", Toast.LENGTH_SHORT)
+            .show()
 
         val newFavRestaurants = (activity as MainActivity).getFavouriteRestaurants(uid)
         sharedViewModel.setFavouriteRestaurants(newFavRestaurants)

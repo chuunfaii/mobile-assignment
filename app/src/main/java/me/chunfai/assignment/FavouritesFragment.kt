@@ -42,11 +42,7 @@ class FavouritesFragment : Fragment(), CoroutineScope {
         job.cancel()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false)
 
         database = FirebaseFirestore.getInstance()
@@ -85,11 +81,8 @@ class FavouritesFragment : Fragment(), CoroutineScope {
 
         database.collection("favorites").document(restaurantId).update(updates).await()
 
-        Toast.makeText(
-            context,
-            "${restaurant.name} has been removed from your favorites.",
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(context, "${restaurant.name} has been removed from your favorites.", Toast.LENGTH_SHORT)
+            .show()
 
         val newFavRestaurants = (activity as MainActivity).getFavouriteRestaurants(uid)
         sharedViewModel.setFavouriteRestaurants(newFavRestaurants)

@@ -30,11 +30,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var user: User
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
         auth = Firebase.auth
@@ -145,11 +141,8 @@ class ProfileFragment : Fragment() {
                         )
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                activity,
-                                "Account details have been updated.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(activity, "Account details have been updated.", Toast.LENGTH_LONG)
+                                .show()
                             Log.d("UserProfile", "User details updated on Firestore.")
 
                             // Update current user in SharedViewModel.

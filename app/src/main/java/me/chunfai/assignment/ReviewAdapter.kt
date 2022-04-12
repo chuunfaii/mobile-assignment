@@ -96,11 +96,8 @@ class ReviewAdapter(
             val reviewId = restaurantId + "_" + uid
 
             database.collection("reviews").document(reviewId).delete().addOnSuccessListener {
-                Toast.makeText(
-                    itemView.context,
-                    "You have removed your review successfully.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(itemView.context, "You have removed your review successfully.", Toast.LENGTH_SHORT)
+                    .show()
 
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, RestaurantDetailsFragment())

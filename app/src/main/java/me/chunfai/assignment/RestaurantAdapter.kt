@@ -56,10 +56,7 @@ class RestaurantAdapter(
         restaurantsFilterList = restaurants
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RestaurantAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantAdapter.ViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant, parent, false)
         return ViewHolder(itemView)

@@ -25,11 +25,7 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
 
     private lateinit var restaurant: Restaurant
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_review, container, false)
 
         auth = FirebaseAuth.getInstance()
