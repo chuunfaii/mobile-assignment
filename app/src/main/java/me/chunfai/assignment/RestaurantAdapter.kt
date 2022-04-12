@@ -24,8 +24,6 @@ class RestaurantAdapter(
 
     var restaurantsFilterList = mutableListOf<Restaurant>()
 
-    private lateinit var mContext: Context
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val restaurantCard: MaterialCardView = itemView.findViewById(R.id.cardRestaurant)
         val restaurantImage: ImageView = itemView.findViewById(R.id.imageRestaurant)
@@ -82,7 +80,7 @@ class RestaurantAdapter(
             }
             .addOnFailureListener {
                 Toast.makeText(
-                    mContext,
+                    holder.itemView.context,
                     "Failed to retrieve a restaurant image.",
                     Toast.LENGTH_SHORT
                 ).show()
