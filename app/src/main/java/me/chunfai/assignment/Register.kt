@@ -1,14 +1,17 @@
 package me.chunfai.assignment
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import me.chunfai.assignment.databinding.ActivityRegisterBinding
+
 
 class Register : AppCompatActivity() {
 
@@ -65,8 +68,18 @@ class Register : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "This email already exists. Please try another email.", Toast.LENGTH_LONG)
-                    .show()
+                try {
+                    throw it.exception!!
+                } catch (e: FirebaseAuthWeakPasswordException) {
+                    Toast.makeText(this, "Password is too weak. Please try again.", Toast.LENGTH_SHORT)
+                        .show()
+                } catch (e: FirebaseAuthUserCollisionException) {
+                    Toast.makeText(this, "This email already exists. Please try again.", Toast.LENGTH_SHORT)
+                        .show()
+                } catch (e: Exception) {
+                    Toast.makeText(this, e.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }
