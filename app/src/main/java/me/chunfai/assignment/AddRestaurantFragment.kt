@@ -29,7 +29,6 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class AddRestaurantFragment : Fragment() {
 
     private lateinit var binding: FragmentAddRestaurantBinding
@@ -41,11 +40,7 @@ class AddRestaurantFragment : Fragment() {
     private lateinit var imageUri: Uri
     private lateinit var imageByteArray: ByteArray
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_restaurant, container, false)
 
@@ -138,6 +133,15 @@ class AddRestaurantFragment : Fragment() {
             return
         }
 
+        val regex = Regex("([01]?[0-9]|2[0-3])[0-5][0-9]")
+        val timeOpenMatchResult = regex.matchEntire(restaurantTimeOpen)
+        val timeCloseMatchResult = regex.matchEntire(restaurantTimeClose)
+
+        if (!regex.containsMatchIn(timeOpenMatchResult.toString()) || !regex.containsMatchIn(timeCloseMatchResult.toString())) {
+            Toast.makeText(context, "Incorrect 24 hour format in restaurant business hours.", Toast.LENGTH_LONG).show()
+            return
+        }
+
         val restaurant = hashMapOf(
             "name" to restaurantName,
             "address" to restaurantAddress,
@@ -160,11 +164,7 @@ class AddRestaurantFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             sharedViewModel.resetRestaurants()
 
-            Toast.makeText(
-                context,
-                "New restaurant has been added successfully.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, "New restaurant has been added successfully.", Toast.LENGTH_SHORT).show()
 
             requireActivity().supportFragmentManager.popBackStack()
         }
