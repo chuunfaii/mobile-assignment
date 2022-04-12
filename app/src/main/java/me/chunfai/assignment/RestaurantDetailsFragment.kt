@@ -23,11 +23,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentRestaurantDetailsBinding
 import java.io.File
 import kotlin.coroutines.CoroutineContext
-import kotlin.properties.Delegates
 
 class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details), CoroutineScope {
 

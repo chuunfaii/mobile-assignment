@@ -57,7 +57,8 @@
                 android:layout_marginTop="10dp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:progressBackgroundTint="#FBBC00" />
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="#FFCC01" />
 
             <TextView
                 android:id="@+id/textRestaurantAddress"

@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:numStars="5"
-        android:progressBackgroundTint="#FBBC00" />
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="#FFCC01" />
 
     <TextView
         android:id="@+id/textReview"
