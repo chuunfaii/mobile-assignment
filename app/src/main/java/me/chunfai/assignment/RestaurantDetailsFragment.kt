@@ -101,6 +101,7 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
         binding.textRestaurantContact.text = "Contact No.: " + restaurant?.contact
         binding.textRestaurantBusinessHours.text =
             "Business Hours: $restaurantOpenTime - $restaurantClosingTime"
+        binding.textRestaurantDescription.text = restaurant?.description
 
         binding.favouriteIcon.setOnClickListener {
             launch {
