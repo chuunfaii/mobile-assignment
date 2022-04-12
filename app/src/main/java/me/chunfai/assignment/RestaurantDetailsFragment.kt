@@ -27,6 +27,7 @@ import kotlinx.coroutines.tasks.await
 import me.chunfai.assignment.databinding.FragmentRestaurantDetailsBinding
 import java.io.File
 import kotlin.coroutines.CoroutineContext
+import kotlin.properties.Delegates
 
 class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details), CoroutineScope {
 
@@ -39,6 +40,7 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
     private lateinit var adapter: RecyclerView.Adapter<ReviewAdapter.ViewHolder>
 
     private lateinit var reviews: MutableList<Review>
+    private var hasReview = false
 
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -110,15 +112,21 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
         }
 
         binding.review.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, AddReviewFragment())
-                .addToBackStack(null)
-                .commit()
+            if (hasReview) {
+                Toast.makeText(context, "You have already written a review on this restaurant.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, AddReviewFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
 
         launch {
-            getReviews()
+            reviews = sharedViewModel.getReviews()
             setAverageRating()
+            checkHasReview()
             setRecyclerView()
         }
 
@@ -158,66 +166,28 @@ class RestaurantDetailsFragment : Fragment(R.layout.fragment_restaurant_details)
             .commit()
     }
 
-    private suspend fun getReviews() {
-
-        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
-        val reviewRef = database.collection("reviews")
-        val snapshot = reviewRef.get().await()
-
-        for (document in snapshot.documents) {
-            if (document.get("restaurantId") == selectedRestaurant?.id) {
-                val id = document.id
-                val rating = document.get("rating").toString()
-                val restaurantId = document.get("restaurantId").toString()
-                val comment = document.get("review").toString()
-                val userId = document.get("userId").toString()
-                val user = getUser(userId)
-                val username = user.firstName + " " + user.lastName
-                val review = Review(
-                    id,
-                    comment,
-                    restaurantId,
-                    rating,
-                    userId,
-                    username
-                )
-
-                reviews.add(review)
-            }
-        }
-    }
-
-    private suspend fun getUser(uid: String): User {
-        val userRef = database.collection("users").document(uid)
-        val snapshot = userRef.get().await()
-        val data = snapshot.data!!
-
-        val firstName = data["firstName"].toString()
-        val lastName = data["lastName"].toString()
-        val email = data["email"].toString()
-
-        return User(firstName, lastName, email)
-    }
-
-    private suspend fun setAverageRating() {
-        val selectedRestaurant = sharedViewModel.selectedRestaurant.value
-        val allReviews = database.collection("reviews")
-        val snapshot = allReviews.get().await()
-
-        var reviewCount = 0
+    private fun setAverageRating() {
         var totalRating = 0f
 
-        for (document in snapshot.documents) {
-            if (document.get("restaurantId") == selectedRestaurant?.id) {
-                val rating = document.get("rating").toString()
-                reviewCount += 1
-                totalRating += rating.toFloat()
-            }
+        for (review in reviews) {
+            val rating = review.rating.toString()
+            totalRating += rating.toFloat()
         }
 
-        val averageRating = totalRating / reviewCount
+        val averageRating = totalRating / reviews.size
 
         binding.ratingBar.rating = averageRating
+    }
+
+    private fun checkHasReview() {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+
+        for (review in reviews) {
+            if (review.userId == uid) {
+                hasReview = true
+                return
+            }
+        }
     }
 
     private fun setRecyclerView() {

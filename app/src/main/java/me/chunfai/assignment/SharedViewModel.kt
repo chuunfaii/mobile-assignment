@@ -84,4 +84,51 @@ class SharedViewModel : ViewModel() {
         return restaurants
     }
 
+    suspend fun getReviews(): MutableList<Review> {
+        val database = FirebaseFirestore.getInstance()
+
+        val reviews = mutableListOf<Review>()
+
+        val reviewsRef = database.collection("reviews")
+        val snapshot = reviewsRef.get().await()
+
+        for (document in snapshot.documents) {
+            if (document.get("restaurantId") == selectedRestaurant.value?.id) {
+                val id = document.id
+                val rating = document.get("rating").toString()
+                val restaurantId = document.get("restaurantId").toString()
+                val comment = document.get("review").toString()
+                val userId = document.get("userId").toString()
+                val user = getUser(userId)
+                val username = user.firstName + " " + user.lastName
+                val review = Review(
+                    id,
+                    comment,
+                    restaurantId,
+                    rating,
+                    userId,
+                    username
+                )
+
+                reviews.add(review)
+            }
+        }
+
+        return reviews
+    }
+
+    private suspend fun getUser(uid: String): User {
+        val database = FirebaseFirestore.getInstance()
+
+        val userRef = database.collection("users").document(uid)
+        val snapshot = userRef.get().await()
+        val data = snapshot.data!!
+
+        val firstName = data["firstName"].toString()
+        val lastName = data["lastName"].toString()
+        val email = data["email"].toString()
+
+        return User(firstName, lastName, email)
+    }
+
 }
